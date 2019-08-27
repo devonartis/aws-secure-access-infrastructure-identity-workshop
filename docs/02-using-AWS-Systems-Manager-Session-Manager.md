@@ -170,7 +170,7 @@ In order to use Session Manager to connect to hybrid systems SSM needs to be con
 
 6.Select **Managed Instances** You should now see a new **Advanced Instances** label next to the Managed Instances Heading and you can now manage hybrid systems.
 
-### Create IAM users and policy restrictions based on tags
+## Create IAM users and policy restrictions based on tags
 **NOTE:** The following steps require full access to IAM.
 
 1.From your Cloud9 session, use the create-user command to create the user.
