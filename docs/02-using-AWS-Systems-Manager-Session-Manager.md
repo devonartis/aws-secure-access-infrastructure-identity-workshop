@@ -8,7 +8,7 @@ Using our Cloud9IDE and VPC, created by the CloudFormation Stack, we will create
 
 1. Create IAM roles and permissions to enable Session Manager
 2. Create instances and install the SSM Agent
-3. Configure Systems Manager and enable Hybrid management
+3. Configure and enable Systems Manager to manage the hybrid management
 4. Create IAM users and policy restrictions based on tags
 5. Configure logging
 6. Confirm appropriate access and review logs
@@ -79,7 +79,7 @@ aws iam attach-role-policy --role-name SSMServiceRole --policy-arn arn:aws:iam::
 aws iam attach-role-policy --role-name SSMServiceRole --policy-arn arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
 ```
 
-## Configure Systems Manager to enable hybrid management
+## Enable Systems Manager to manage your hybrid systems
 
 The activation process provides an Activation Code and ID which functions like an access key and secret key to provide secure access to the Systems Manager service form your managed instances.
 
@@ -154,7 +154,7 @@ sudo start amazon-ssm-agent
 
 9.Log out of DevOnPrem and ProdOnPrem systems.
 
-## Configure Systems Manager and enable Hybrid management
+## Continue to configure Systems Manager and enable Hybrid management
 
 In order to use Session Manager to connect to hybrid systems SSM needs to be configured for advanced-instances tier. To enable the advanced-instances tier:
 
