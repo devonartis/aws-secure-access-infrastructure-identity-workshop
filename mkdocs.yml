@@ -4,10 +4,10 @@ site_name: Infrastructure Identity in AWS
 site_short_name: Infrastructure Identity
 site_description: 'This hands-on workshop is where you will learn about a number of AWS services that will enable you to securely administer your systems in AWS as we walk through real-world threat scenarios. Learn about the secure administration capabilities of AWS Session Manager, AWS Identity and Access Management and Amazon EC2 Instance Connect.'
 site_author: 'aws-security-workshops@amazon.com'
-site_url: 'https://infrastructure-identity.awssecworkshops.com/'
+site_url: 'https://idm-infrastructure.awssecworkshops.com/'
 
 # Repository
-repo_name: 'aws-samples/aws-infrastructure-identity-workshop'
+repo_name: 'aws-samples/aws-secure-access-infrastructure-identity-workshop'
 repo_url: 'https://github.com/aws-samples/aws-infrastructure-identity-workshop'
 
 # Copyright
