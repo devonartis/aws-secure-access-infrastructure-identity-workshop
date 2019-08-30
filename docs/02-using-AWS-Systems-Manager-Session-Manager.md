@@ -25,14 +25,14 @@ aws iam create-instance-profile --instance-profile-name SSMLabProfile
 
 3.Create the json trust policy doc to attach to the IAM role. Create a new file with the following contents, save the file name: **lab-role-trust-policy.json**:
 ```json
-    {
-      "Version": "2012-10-17",
-      "Statement": {
-        "Effect": "Allow",
-        "Principal": {"Service": "ec2.amazonaws.com"},
-        "Action": "sts:AssumeRole"
-      }
-    }
+{
+  "Version": "2012-10-17",
+  "Statement": {
+    "Effect": "Allow",
+    "Principal": {"Service": "ec2.amazonaws.com"},
+    "Action": "sts:AssumeRole"
+  }
+}
 ```
 
 4.Create an IAM role using the trust policy above:
