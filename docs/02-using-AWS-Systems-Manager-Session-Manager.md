@@ -309,7 +309,7 @@ Session Manager provides you with options for auditing and logging session activ
 > * Generate notifications of session activity in your AWS account, such as Amazon Simple Notification Service (Amazon SNS) notifications.
 > *	Automatically initiate another action on an AWS resource as the result of session activity, such as running an AWS Lambda function, starting an AWS CodePipeline pipeline, or running an AWS Systems Manager Run Command document.
 
-We will log session data using Amazon CloudWatch Logs, archive session logs to Amazon S3 and generate access reports.
+We will log session data using Amazon CloudWatch Logs. 
 
 1. To setup Session Manager logging in Amazon CloudWatch Logs, open the <a href="https://console.aws.amazon.com/cloudwatch/" target="_blank">CloudWatch Console</a>. In the navigation pane, choose **Logs**
 
@@ -326,7 +326,7 @@ We will log session data using Amazon CloudWatch Logs, archive session logs to A
 > * Enable RunAs support for Linux instances instead of the ssm-user account.
 
 
-3.	Select the check box next to **CloudWatch logs**.
+3.	Select the check box next to **CloudWatch logs** and deselect **Encrypt log data**.
 
 4.	For CloudWatch logs, select **Choose a log group name from the list** specify the CloudWatch Logs group you just created **SSM-Logs** and select **Save**. Additionally, you can view ssm-agent logs on the instance here:
 >
