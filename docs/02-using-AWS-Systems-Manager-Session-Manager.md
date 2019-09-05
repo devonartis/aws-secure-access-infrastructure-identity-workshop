@@ -279,12 +279,20 @@ aws iam list-attached-user-policies --user-name MyWorkshopUser
 The result should return the following:
 ```
 {
-    "AttachedPolicies": [
-        {
-            "PolicyName": "SSMDevAccess",
-            "PolicyArn": "arn:aws:iam::aws:policy/SSMDevAccess"
-        }
-    ]
+  "AttachedPolicies": [
+    {
+        "PolicyName": "CloudWatchEventsReadOnlyAccess",
+        "PolicyArn": "arn:aws:iam::aws:policy/CloudWatchEventsReadOnlyAccess"
+    },
+    {
+        "PolicyName": "CloudWatchLogsReadOnlyAccess",
+        "PolicyArn": "arn:aws:iam::aws:policy/CloudWatchLogsReadOnlyAccess"
+    },
+    {
+        "PolicyName": "SSMDevAccess",
+        "PolicyArn": "arn:aws:iam::680721563572:policy/SSMDevAccess"
+    }
+  ]
 }
 
 
@@ -342,12 +350,12 @@ ssm-user
 
 3.Click Terminate to end.
 
-4.Repeat the steps above with the DevSSM instance. You should find the same results, the result should return the following:
+4.Repeat the steps above with the DevEC2Instance instance. You should find the same results, the result should return the following:
 ssm-user
 
 5.Click **Terminate** to end.
 
-6.Now try the ProdSSM instance, click start Session. The result should return the following:
+6.Now try the ProdEC2Instance instance, click start Session. The result should return the following:
 ![Session Manager Access Denied](./images/Denied.png)
 
 7.Click **Terminate** to end your session, at this point, all sessions should be terminated.
