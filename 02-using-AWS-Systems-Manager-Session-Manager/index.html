@@ -658,14 +658,14 @@
 
 
 <p>3.Create the json trust policy doc to attach to the IAM role. Create a new file with the following contents, save the file name: <strong>lab-role-trust-policy.json</strong>:</p>
-<div class="codehilite"><pre><span></span>    <span class="p">{</span>
-      <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;Statement&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;Principal&quot;</span><span class="p">:</span> <span class="p">{</span><span class="nt">&quot;Service&quot;</span><span class="p">:</span> <span class="s2">&quot;ec2.amazonaws.com&quot;</span><span class="p">},</span>
-        <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="s2">&quot;sts:AssumeRole&quot;</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;Statement&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;Principal&quot;</span><span class="p">:</span> <span class="p">{</span><span class="nt">&quot;Service&quot;</span><span class="p">:</span> <span class="s2">&quot;ec2.amazonaws.com&quot;</span><span class="p">},</span>
+    <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="s2">&quot;sts:AssumeRole&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 
@@ -904,12 +904,20 @@ sudo start amazon-ssm-agent
 
 <p>The result should return the following:</p>
 <div class="codehilite"><pre><span></span>{
-    &quot;AttachedPolicies&quot;: [
-        {
-            &quot;PolicyName&quot;: &quot;SSMDevAccess&quot;,
-            &quot;PolicyArn&quot;: &quot;arn:aws:iam::aws:policy/SSMDevAccess&quot;
-        }
-    ]
+  &quot;AttachedPolicies&quot;: [
+    {
+        &quot;PolicyName&quot;: &quot;CloudWatchEventsReadOnlyAccess&quot;,
+        &quot;PolicyArn&quot;: &quot;arn:aws:iam::aws:policy/CloudWatchEventsReadOnlyAccess&quot;
+    },
+    {
+        &quot;PolicyName&quot;: &quot;CloudWatchLogsReadOnlyAccess&quot;,
+        &quot;PolicyArn&quot;: &quot;arn:aws:iam::aws:policy/CloudWatchLogsReadOnlyAccess&quot;
+    },
+    {
+        &quot;PolicyName&quot;: &quot;SSMDevAccess&quot;,
+        &quot;PolicyArn&quot;: &quot;arn:aws:iam::680721563572:policy/SSMDevAccess&quot;
+    }
+  ]
 }
 </pre></div>
 
@@ -972,10 +980,10 @@ sudo start amazon-ssm-agent
 <p>The result should return the following:
 ssm-user</p>
 <p>3.Click Terminate to end.</p>
-<p>4.Repeat the steps above with the DevSSM instance. You should find the same results, the result should return the following:
+<p>4.Repeat the steps above with the DevEC2Instance instance. You should find the same results, the result should return the following:
 ssm-user</p>
 <p>5.Click <strong>Terminate</strong> to end.</p>
-<p>6.Now try the ProdSSM instance, click start Session. The result should return the following:
+<p>6.Now try the ProdEC2Instance instance, click start Session. The result should return the following:
 <img alt="Session Manager Access Denied" src="../images/Denied.png" /></p>
 <p>7.Click <strong>Terminate</strong> to end your session, at this point, all sessions should be terminated.</p>
 <p>8.Go to the <strong>AWS Systems Manager</strong>, click on <strong>Session Manager</strong>, click on <strong>Session History</strong>. Your sessions should show up as Terminated or Terminating. Once the session has terminated you will see a link to <strong>CloudWatch Logs</strong>.
