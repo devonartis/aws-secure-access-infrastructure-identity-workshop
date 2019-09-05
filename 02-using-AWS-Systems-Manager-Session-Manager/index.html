@@ -932,7 +932,7 @@ sudo start amazon-ssm-agent
 <li>Automatically initiate another action on an AWS resource as the result of session activity, such as running an AWS Lambda function, starting an AWS CodePipeline pipeline, or running an AWS Systems Manager Run Command document.</li>
 </ul>
 </blockquote>
-<p>We will log session data using Amazon CloudWatch Logs, archive session logs to Amazon S3 and generate access reports.</p>
+<p>We will log session data using Amazon CloudWatch Logs. </p>
 <ol>
 <li>
 <p>To setup Session Manager logging in Amazon CloudWatch Logs, open the <a href="https://console.aws.amazon.com/cloudwatch/" target="_blank">CloudWatch Console</a>. In the navigation pane, choose <strong>Logs</strong></p>
@@ -957,7 +957,7 @@ sudo start amazon-ssm-agent
 </blockquote>
 </li>
 <li>
-<p>Select the check box next to <strong>CloudWatch logs</strong>.</p>
+<p>Select the check box next to <strong>CloudWatch logs</strong> and deselect <strong>Encrypt log data</strong>.</p>
 </li>
 <li>
 <p>For CloudWatch logs, select <strong>Choose a log group name from the list</strong> specify the CloudWatch Logs group you just created <strong>SSM-Logs</strong> and select <strong>Save</strong>. Additionally, you can view ssm-agent logs on the instance here:</p>
