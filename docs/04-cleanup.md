@@ -21,3 +21,5 @@ In the last module we will terminate the instances we built and delete the Cloud
 
 1.Go to the CloudFormation
 <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks" target="_blank">Console</a>. Select 'InfrastructureIdentity-Env-Setup', select **Actions** and click on **Delete Stack**. At the prompt, select **Yes, Delete**
+
+2.Go to IAM, click on Users, select MyWorkshopUser and delete.

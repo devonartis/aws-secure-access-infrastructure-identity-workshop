@@ -25,7 +25,7 @@ less /lib/systemd/system/ssh.service.d/ec2-instance-connect.conf
 4.The following command will build an Ubuntu instance with EC2-Instance-Connect installed using user-data, using the Security Group ID and Public Subnet created for us earlier, using the following cli command:
 >Before you run the command below remove all quotes and replace "subnet-xx" and "sg-xx" with the information from the previous step and your SSH key.
 ```bash
-aws ec2 run-instances --image-id ami-026c8acd92718196b --instance-type t1.micro --subnet-id subnet-xx --security-group-ids sg-xx --associate-public-ip-address --tag-specifications 'ResourceType=instance,Tags={Key="Name",Value="EC2ConnectInstance"}' --user-data file://connect-install.txt
+aws ec2 run-instances --image-id ami-026c8acd92718196b --instance-type t1.micro --subnet-id subnet-xx --security-group-ids sg-xx --region us-east-1 --associate-public-ip-address --tag-specifications 'ResourceType=instance,Tags={Key="Name",Value="EC2ConnectInstance"}' --user-data file://connect-install.txt
 ```
 
 5.You will see the output that includes details about the instance you just created. Take note of the instance-id as we will use it in the next section.
@@ -38,7 +38,7 @@ aws ec2 run-instances --image-id ami-026c8acd92718196b --instance-type t1.micro 
 
 ## IAM roles and permissions to enable EC2 Instance Connect
 
-1.Now we will create and attach an IAM Custom Policy to MyWorkshopUser. Create a Custom IAM Policy named InstanceConnect.json. Update the "i-xx" with the instance-id that you noted earlier. Copy the json code below and paste it into a new file called InstanceConnect.json
+1.Now we will create and attach an IAM Customer Managed Policy to MyWorkshopUser. Create a new file with the following contents but **Replace** the "i-xx" with the instance-id that you noted earlier, save the file name: InstanceConnect.json
 
 >This file must reside in the same directory where your CLI session is running, or you must specify the location.
 
@@ -82,14 +82,15 @@ The result should return the following:
     }
 }
 ```
+3. This above command will output a policy ARN for the policy we just created. Copy this ARN from the prior output and replace it in the next command.
 
-3.To attach the policy, use the attach-user-policy command, and reference the environment variable that holds the policy ARN.
+3.To attach the policy, use the attach-user-policy command, and use the policy ARN output from above.
 ```bash
 aws iam attach-user-policy --user-name MyWorkshopUser --policy-arn arn:aws:iam::abc123:policy/InstanceConnect
 ```
 
 ## Confirm Access
-1.You can connect to an instance as the MyWorkshopUser, login as that user with a different browser.
+1.Now using a different browser or sign out of the AWS Management Console and sign back in as MyWorkshopUser. 
 
 2.Go to **EC2**, select **Instances**, select the **EC2ConnectInstance**. Select **Connect** and choose the option to **connect with EC2 Instance Connect (browser-based SSH connection)**. Update the user name to **ubuntu**. EC2 Instance Connect performs the following three actions in one call: it generates a one-time-use SSH public key, pushes the key to the instance where it remains for 60 seconds, and connects the user to the instance. You can use basic SSH/SFTP commands with the Instance Connect CLI.
 
