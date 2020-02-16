@@ -4,8 +4,8 @@ This hands-on workshop is where you will learn about a number of AWS services th
 
 ## Start the workshop:
 
-Visit the site to get started: [https://infrastructure-identity.awssecworkshops.com/](https://infrastructure.awssecworkshops.com/)
+Visit the site to get started: [https://idm-infrastructure.awssecworkshops.com/](https://infrastructure.awssecworkshops.com/)
 
 ## License Summary
 
-This sample code is made available under a modified MIT license. See the LICENSE file.
+This sample code is made available under a modified MIT-0 license. See the LICENSE file.
