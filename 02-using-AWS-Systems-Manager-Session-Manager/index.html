@@ -13,7 +13,7 @@
         <meta name="description" content="This hands-on workshop is where you will learn about a number of AWS services that will enable you to securely administer your systems in AWS as we walk through real-world threat scenarios. Learn about the secure administration capabilities of AWS Session Manager, AWS Identity and Access Management and Amazon EC2 Instance Connect.">
       
       
-        <link rel="canonical" href="https://idm-infrastructure.awssecworkshops.com/02-using-AWS-Systems-Manager-Session-Manager/">
+        <link rel="canonical" href="https://infrastructure-identity.awssecworkshops.com/02-using-AWS-Systems-Manager-Session-Manager/">
       
       
         <meta name="author" content="aws-security-workshops@amazon.com">
@@ -102,7 +102,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#module-2-session-manager" tabindex="1" class="md-skip">
+      <a href="#module-2-session-manager-30-minutes" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -222,7 +222,7 @@
 
   
 
-<a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/aws-samples/aws-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -231,7 +231,7 @@
     </div>
   
   <div class="md-source__repository">
-    aws-samples/aws-secure-access-infrastructure-identity-workshop
+    aws-samples/aws-infrastructure-identity-workshop
   </div>
 </a>
             </div>
@@ -309,7 +309,7 @@
 
   <!-- Site title -->
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="https://idm-infrastructure.awssecworkshops.com/"
+    <a href="https://infrastructure-identity.awssecworkshops.com/"
         title="Infrastructure Identity in AWS" class="md-nav__button md-logo">
       
         <img src="../assets/images/aws_smile_logo.png" width="48" height="48" />
@@ -326,7 +326,7 @@
 
   
 
-<a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/aws-samples/aws-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -335,7 +335,7 @@
     </div>
   
   <div class="md-source__repository">
-    aws-samples/aws-secure-access-infrastructure-identity-workshop
+    aws-samples/aws-infrastructure-identity-workshop
   </div>
 </a>
     </div>
@@ -362,8 +362,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../01-environment-setup/" title="Module 1: Environment Build" class="md-nav__link">
-      Module 1: Environment Build
+    <a href="../01-environment-setup/" title="Module 1: Environment setup" class="md-nav__link">
+      Module 1: Environment setup
     </a>
   </li>
 
@@ -401,65 +401,57 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#agenda" title="Agenda" class="md-nav__link">
-    Agenda
+  <a href="#tasks" title="Tasks" class="md-nav__link">
+    Tasks
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#task-1-create-iam-roles-and-permissions-to-enable-session-manager-for-amazon-ec2-instances" title="Task 1: Create IAM roles and permissions to enable Session Manager for Amazon EC2 Instances" class="md-nav__link">
+    Task 1: Create IAM roles and permissions to enable Session Manager for Amazon EC2 Instances
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#create-iam-roles-and-permissions-to-enable-session-manager-for-amazon-ec2-instances" title="Create IAM roles and permissions to enable Session Manager for Amazon EC2 Instances" class="md-nav__link">
-    Create IAM roles and permissions to enable Session Manager for Amazon EC2 Instances
+        
+          <li class="md-nav__item">
+  <a href="#task-2-create-instances-and-install-the-ssm-agent" title="Task 2: Create instances and install the SSM Agent" class="md-nav__link">
+    Task 2: Create instances and install the SSM Agent
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#create-iam-roles-and-permissions-to-enable-session-manager-for-hybrid-systems" title="Create IAM roles and permissions to enable Session Manager for hybrid systems" class="md-nav__link">
-    Create IAM roles and permissions to enable Session Manager for hybrid systems
+        
+          <li class="md-nav__item">
+  <a href="#task-3-configure-systems-manager-to-enable-management-of-on-premise-systems" title="Task 3: Configure Systems Manager to enable management of on-premise systems" class="md-nav__link">
+    Task 3: Configure Systems Manager to enable management of on-premise systems
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#enable-systems-manager-to-manage-your-hybrid-systems" title="Enable Systems Manager to manage your hybrid systems" class="md-nav__link">
-    Enable Systems Manager to manage your hybrid systems
+        
+          <li class="md-nav__item">
+  <a href="#task-4-create-iam-users-and-policy-restrictions-based-on-tags" title="Task 4: Create IAM users and policy restrictions based on tags" class="md-nav__link">
+    Task 4: Create IAM users and policy restrictions based on tags
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#create-instances-and-install-the-ssm-agent" title="Create instances and install the SSM Agent" class="md-nav__link">
-    Create instances and install the SSM Agent
+        
+          <li class="md-nav__item">
+  <a href="#task-5-configure-logging" title="Task 5: Configure Logging" class="md-nav__link">
+    Task 5: Configure Logging
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#continue-to-configure-systems-manager-and-enable-hybrid-management" title="Continue to configure Systems Manager and enable Hybrid management" class="md-nav__link">
-    Continue to configure Systems Manager and enable Hybrid management
+        
+          <li class="md-nav__item">
+  <a href="#task-6-confirm-appropriate-access-and-review-logs" title="Task 6: Confirm appropriate access and review logs" class="md-nav__link">
+    Task 6: Confirm appropriate access and review logs
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#create-iam-users-and-policy-restrictions-based-on-tags" title="Create IAM users and policy restrictions based on tags" class="md-nav__link">
-    Create IAM users and policy restrictions based on tags
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configure-logging" title="Configure Logging" class="md-nav__link">
-    Configure Logging
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#confirm-access" title="Confirm Access" class="md-nav__link">
-    Confirm Access
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -550,65 +542,57 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#agenda" title="Agenda" class="md-nav__link">
-    Agenda
+  <a href="#tasks" title="Tasks" class="md-nav__link">
+    Tasks
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#task-1-create-iam-roles-and-permissions-to-enable-session-manager-for-amazon-ec2-instances" title="Task 1: Create IAM roles and permissions to enable Session Manager for Amazon EC2 Instances" class="md-nav__link">
+    Task 1: Create IAM roles and permissions to enable Session Manager for Amazon EC2 Instances
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#create-iam-roles-and-permissions-to-enable-session-manager-for-amazon-ec2-instances" title="Create IAM roles and permissions to enable Session Manager for Amazon EC2 Instances" class="md-nav__link">
-    Create IAM roles and permissions to enable Session Manager for Amazon EC2 Instances
+        
+          <li class="md-nav__item">
+  <a href="#task-2-create-instances-and-install-the-ssm-agent" title="Task 2: Create instances and install the SSM Agent" class="md-nav__link">
+    Task 2: Create instances and install the SSM Agent
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#create-iam-roles-and-permissions-to-enable-session-manager-for-hybrid-systems" title="Create IAM roles and permissions to enable Session Manager for hybrid systems" class="md-nav__link">
-    Create IAM roles and permissions to enable Session Manager for hybrid systems
+        
+          <li class="md-nav__item">
+  <a href="#task-3-configure-systems-manager-to-enable-management-of-on-premise-systems" title="Task 3: Configure Systems Manager to enable management of on-premise systems" class="md-nav__link">
+    Task 3: Configure Systems Manager to enable management of on-premise systems
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#enable-systems-manager-to-manage-your-hybrid-systems" title="Enable Systems Manager to manage your hybrid systems" class="md-nav__link">
-    Enable Systems Manager to manage your hybrid systems
+        
+          <li class="md-nav__item">
+  <a href="#task-4-create-iam-users-and-policy-restrictions-based-on-tags" title="Task 4: Create IAM users and policy restrictions based on tags" class="md-nav__link">
+    Task 4: Create IAM users and policy restrictions based on tags
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#create-instances-and-install-the-ssm-agent" title="Create instances and install the SSM Agent" class="md-nav__link">
-    Create instances and install the SSM Agent
+        
+          <li class="md-nav__item">
+  <a href="#task-5-configure-logging" title="Task 5: Configure Logging" class="md-nav__link">
+    Task 5: Configure Logging
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#continue-to-configure-systems-manager-and-enable-hybrid-management" title="Continue to configure Systems Manager and enable Hybrid management" class="md-nav__link">
-    Continue to configure Systems Manager and enable Hybrid management
+        
+          <li class="md-nav__item">
+  <a href="#task-6-confirm-appropriate-access-and-review-logs" title="Task 6: Confirm appropriate access and review logs" class="md-nav__link">
+    Task 6: Confirm appropriate access and review logs
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#create-iam-users-and-policy-restrictions-based-on-tags" title="Create IAM users and policy restrictions based on tags" class="md-nav__link">
-    Create IAM users and policy restrictions based on tags
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configure-logging" title="Configure Logging" class="md-nav__link">
-    Configure Logging
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#confirm-access" title="Confirm Access" class="md-nav__link">
-    Confirm Access
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -635,37 +619,48 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/edit/master/docs/02-using-AWS-Systems-Manager-Session-Manager.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/aws-samples/aws-infrastructure-identity-workshop/edit/master/docs/02-using-AWS-Systems-Manager-Session-Manager.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="module-2-session-manager">Module 2: Session Manager</h1>
-<p>In this module we'll focus on the configuration of setting up secure administrative access to both on-premise systems and EC2 instances. The most secure environment is one in which no access is provided and all configuration has been done as part of a standard build process. However in the development environment you may still need access to your systems for iterating on configuration and troubleshooting. Using Amazon Systems Manager Session Manager and AWS IAM with tag based permissions we will implement this exact scenario and review the audit logs.</p>
-<p>Using our Cloud9IDE and VPC, created by the CloudFormation Stack, we will create IAM roles with permissions to enable Session Manager access. Additionally, we are going to deploy 4 EC2 Instances, 4 will be standard AWS EC2 Instances (one tagged as development and the other production), and 2 instances will be used as mock on-premise systems. We will setup Systems Manager to manage the on-premise systems as well as the EC2 instances. Additionally, we will setup logging and review our activities after we've validated appropriate access.</p>
-<h2 id="agenda">Agenda</h2>
+                <h1 id="module-2-session-manager-30-minutes">Module 2: Session Manager ~ 30 minutes</h1>
+<p>We were given the task to setup secure administrative access to our instances but we know that anytime someone logs into a server changes can be made and those changes could inadvertently affect the security of the host. Instead of hoping our system security doesn't change, let's change the access pattern and restrict all access into production systems. This approach to administrative access is called <em>Immutable Infrastructure</em>, which includes managing services and software deployments on IT resources wherein components are replaced rather than changed. An application or services is effectively redeployed each time any change occurs. Given this is a new access pattern for our team, we will continue to allow access to our development systems. Using Amazon Systems Manager Session Manager and AWS IAM with tag based permissions we will implement this exact scenario and review the audit logs.</p>
+<p>In this Module we will create IAM roles with permissions to enable Session Manager access. Additionally, we are going to deploy 4 systems:</p>
+<ul>
+<li>AWS EC2 Instance tagged with development</li>
+<li>AWS EC2 Instance tagged with production</li>
+<li>Mock on-premise system tagged with development</li>
+<li>Mock on-premise system tagged with production</li>
+</ul>
+<p>Please note our mock on-premise systems will be EC2 instances, however we will treat them like on-premise systems by not assigning an Instance Profile.</p>
+<div class="admonition terminology">
+<p class="admonition-title">Terminology</p>
+<p>A <em>managed instance</em> is any machine configured for AWS Systems Manager. You can configure Amazon EC2 instances or on-premises machines in a hybrid environment as a <em>managed instance</em>. Systems Manager supports various distributions of Linux, including Raspberry Pi devices, and Microsoft Windows Server. In the AWS Management Console, any machine prefixed with "mi-" is an on-premises server or virtual machine (VM) <em>managed instance</em>. AWS Systems Manager offers a standard-instances tier and an advanced-instances tier for servers and VMs in your hybrid environment. Advanced instances also enable you to connect to your hybrid machines by using AWS Systems Manager Session Manager. Session Manager provides interactive shell access to your instances. While this lab focuses on Session Manager which is a capability of AWS Systems Manager there are several other capabilities of AWS Systems Manager that you can take advantage of, more information about <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/features.html" target="_blank">System Manager Capabilities</a></p>
+</div>
+<h2 id="tasks">Tasks</h2>
 <ol>
 <li>Create IAM roles and permissions to enable Session Manager</li>
 <li>Create instances and install the SSM Agent</li>
-<li>Configure and enable Systems Manager to manage the hybrid management</li>
+<li>Configure Systems Manager and enable manage on-premise systems</li>
 <li>Create IAM users and policy restrictions based on tags</li>
 <li>Configure logging</li>
 <li>Confirm appropriate access and review logs</li>
 </ol>
-<h2 id="create-iam-roles-and-permissions-to-enable-session-manager-for-amazon-ec2-instances">Create IAM roles and permissions to enable Session Manager for Amazon EC2 Instances</h2>
-<p>1.Go to <strong>Outputs</strong> section from your CloudFormation deployment, and click on the <strong>Cloud9IDE</strong>. Setup your AWS config file and ensure your Cloud9 environment is using your Access Keys, for additional details follow <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html" target="_blank">Quickly Configuring the AWS CLI</a> You may need to disable AWS managed temporary credentials in Cloud9 Preference, AWS Settings, Credentials.</p>
-<p>2.In Cloud9, create an instance profile:</p>
+<h3 id="task-1-create-iam-roles-and-permissions-to-enable-session-manager-for-amazon-ec2-instances">Task 1: Create IAM roles and permissions to enable Session Manager for Amazon EC2 Instances</h3>
+<p>1.If you are at an AWS Event where we are using EventEngine, go to <strong>Outputs</strong> section from your CloudFormation deployment, click on the URL next to the <strong>Cloud9IDE</strong> key. Otherwise, if this is not an AWS Event and EventEngine is not used, you can run the following commands from your laptop.</p>
+<p>2.Create an instance profile:</p>
 <div class="codehilite"><pre><span></span>aws iam create-instance-profile --instance-profile-name SSMLabProfile
 </pre></div>
 
 
 <p>3.Create the json trust policy doc to attach to the IAM role. Create a new file with the following contents, save the file name: <strong>lab-role-trust-policy.json</strong>:</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
-  <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;Statement&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;Principal&quot;</span><span class="p">:</span> <span class="p">{</span><span class="nt">&quot;Service&quot;</span><span class="p">:</span> <span class="s2">&quot;ec2.amazonaws.com&quot;</span><span class="p">},</span>
-    <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="s2">&quot;sts:AssumeRole&quot;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<div class="codehilite"><pre><span></span>    <span class="p">{</span>
+      <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;Statement&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;Principal&quot;</span><span class="p">:</span> <span class="p">{</span><span class="nt">&quot;Service&quot;</span><span class="p">:</span> <span class="s2">&quot;ec2.amazonaws.com&quot;</span><span class="p">},</span>
+        <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="s2">&quot;sts:AssumeRole&quot;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
 </pre></div>
 
 
@@ -684,8 +679,8 @@
 </pre></div>
 
 
-<h2 id="create-iam-roles-and-permissions-to-enable-session-manager-for-hybrid-systems">Create IAM roles and permissions to enable Session Manager for hybrid systems</h2>
-<p>1.Create a text file with a name such as ssmservice-trust-policy.json with the following trust policy. Make sure to save the file with the .json file extension.</p>
+<p>Attach the instance profile to the system.</p>
+<p>1.Create the json trust policy doc to attach to the IAM role. Create a new file with the following contents, save the file name: ssmservice-trust-policy.json</p>
 <div class="codehilite"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
   <span class="nt">&quot;Statement&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -702,7 +697,7 @@
 </pre></div>
 
 
-<p>3.Attach-role-policy enables the SSMServiceRole to create a session token. The session token gives your managed instance permissions to run commands using System Manager.</p>
+<p>3.As a starting point, we will use AmazonSSMManagedInstanceCore grant permission for Systems Manager to interact with your instances. AmazonSSMManagedInstanceCore, enables an instance to use AWS Systems Manager service core functionality. Depending on your operations plan, you might need permissions represented in one or more of the other three policies. To view this policy in the console go to services, IAM, Access Management, Policies and search for the <strong>AmazonSSMManagedInstanceCore</strong> policy, click on the policy, view the permissions by clicking on the permissions tab. Now attach this policy to the role using attach-role-policy command.</p>
 <div class="codehilite"><pre><span></span>aws iam attach-role-policy --role-name SSMServiceRole --policy-arn arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
 </pre></div>
 
@@ -712,101 +707,162 @@
 </pre></div>
 
 
-<h2 id="enable-systems-manager-to-manage-your-hybrid-systems">Enable Systems Manager to manage your hybrid systems</h2>
-<p>The activation process provides an Activation Code and ID which functions like an access key and secret key to provide secure access to the Systems Manager service form your managed instances.</p>
-<p>1.Open the command line, Create a managed-instance activation for your Dev instance</p>
-<blockquote>
-<p>Please specify the us-east-1 region</p>
-</blockquote>
+<p>Enable Session Manager to manage systems on-premise:</p>
+<p>The activation process provides an Activation Code and ID which functions like an access key ID and secret key to provide secure access to the Systems Manager service form your <em>managed instances</em>.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>If you've been using the Cloud9IDE in this lab please continue to run these commands from there.</p>
+</div>
+<p>1.Open the command line, Create a managed-instance activation for your Dev instance, copy the "activation-code" and "activation-id" and label it as you DevOnPrem in your scratch pad, we will use it later.</p>
 <div class="codehilite"><pre><span></span>aws ssm create-activation --default-instance-name DevOnPrem --iam-role SSMServiceRole --registration-limit <span class="m">10</span> --region us-east-1
 </pre></div>
 
 
-<p>2.Create a managed-instance activation for your Prod instance</p>
-<blockquote>
-<p>Please specify the us-east-1 region</p>
-</blockquote>
+<p>2.Create a managed-instance activation for your Prod instance, copy the "activation-code" and "activation-id" and label it as you ProdOnPrem in your scratch pad, we will use it later.</p>
 <div class="codehilite"><pre><span></span>aws ssm create-activation --default-instance-name ProdOnPrem --iam-role SSMServiceRole --registration-limit <span class="m">10</span> --region us-east-1
 </pre></div>
 
 
-<p><strong>Store the managed-instance Activation Code and Activation ID in a safe place.</strong> You specify this Code and ID when you install SSM Agent on systems on-premise. The code and ID combination functions like an Amazon EC2 access key ID and secret key to provide secure access to the Systems Manager service from your managed instances.</p>
+<p><strong>Store the managed-instance Activation Code and Activation ID in a safe place.</strong> You specify this Code and ID when you install SSM Agent on systems on-premise. The code and ID combination functions like an Amazon EC2 access key ID and secret key to provide secure access to the Systems Manager service from your <em>managed instances</em>.</p>
 <blockquote>
-<p>If you lose the Code and ID, you must create a new activation. An activation expiration is a window of time when you can register on-premises machines with Systems Manager, default is 24 hours. An expired activation has no impact on your servers or virtual machines (VMs) that you registered with Systems Manager. This means that if an activation expires then you can’t register more servers or VMs with Systems Manager by using that specific activation. You simply need to create a new one. All of the servers and VMs that you registered will continue to be registered Systems Manager managed instances until you remove or disable SSM Agent on the server or VM and thereby unregister it. <a href="https://docs.aws.amazon.com/cli/latest/reference/ssm/create-activation.html" target="_blank">For more details:</a></p>
+<p>If you lose the Code and ID, you must create a new activation. An activation expiration is a window of time when you can register on-premises machines with Systems Manager, default is 24 hours. An expired activation has no impact on your servers or virtual machines (VMs) that you registered with Systems Manager. This means that if an activation expires then you can’t register more servers or VMs with Systems Manager by using that specific activation. You simply need to create a new one. All of the servers and VMs that you registered will continue to be registered Systems Manager <em>managed instances</em> until you remove or disable SSM Agent on the server or VM and thereby unregister it. <a href="https://docs.aws.amazon.com/cli/latest/reference/ssm/create-activation.html" target="_blank">For more details:</a></p>
 </blockquote>
-<h2 id="create-instances-and-install-the-ssm-agent">Create instances and install the SSM Agent</h2>
-<p>1.Go back to the CloudFormation Stack, find the stack that starts with "aws-cloud9-*" click on <strong>Resources</strong> and take note of the Security Group ID (sg-abc123). Now find the stack named "InfrastructureIdentity-Env-Setup" click on <strong>Resources</strong> and find the PublicSubnet1 and take note of that as you will use it in steps 2-5.</p>
-<p>2.Now we will build the production instance using the Security Group ID and PublicSubnet1 created for us earlier, using the following cli command:</p>
-<div class="codehilite"><pre><span></span>aws ec2 run-instances --iam-instance-profile <span class="nv">Name</span><span class="o">=</span>SSMLabProfile --image-id ami-0080e4c5bc078760e --instance-type t1.micro --subnet-id <span class="s2">&quot;subnet-xx&quot;</span> --security-group-ids <span class="s2">&quot;sg-xx&quot;</span> --associate-public-ip-address --tag-specifications <span class="s1">&#39;ResourceType=instance,Tags=[{Key=&quot;Name&quot;,Value=&quot;ProdEC2Instance&quot;},{Key=&quot;Environment&quot;,Value=&quot;Prod&quot;}]&#39;</span>
+<h3 id="task-2-create-instances-and-install-the-ssm-agent">Task 2: Create instances and install the SSM Agent</h3>
+<p>Please note that in order to create a mock on-premise system we will be creating and using a key-pair and not using them for the AWS EC2 instances. We do not need a key pair for the AWS EC2 instances because we are using Session Manager to gain direct access.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>If you are using Cloud9, please perform the following on the Cloud9 instance.</p>
+</div>
+<ol>
+<li>Create a key pair for SSH access to the on-premise systems. Follow the instructions for <strong>Creating a Key Pair Using Amazon EC2</strong><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair"_blank"> here.</a> Copy the name of your key pair to your scratch pad.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>What is a Key Pair?</p>
+<p>Amazon EC2 uses public key cryptography to encrypt and decrypt login information. Public key cryptography uses a public key to encrypt a piece of data, and then the recipient uses the private key to decrypt the data. The public and private keys are known as a key pair. Public key cryptography enables you to securely access your instances using a private key instead of a password.</p>
+<p>When you launch an instance, you specify the key pair. You can specify an existing key pair or a new key pair that you create at launch. At boot time, the public key content is placed on the instance in an entry within ~/.ssh/authorized_keys. To log in to your instance, you must specify the private key when you connect to the instance.</p>
+</div>
+<p>2.Go back to the CloudFormation Stack, find the stack that starts with "aws-cloud9-" click on <strong>Resources</strong>, copy the ID next to the <strong>InstanceSecurityGroup</strong> to a scratch pad. Now find the stack named "InfrastructureIdentity-Env-Setup", click on <strong>Resources</strong>, copy the ID next to <strong>PublicSubnet1</strong> to the same scratch pad, you will need them for the following steps.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>At this point, make sure you have captured 3 items on your scratch pad:</p>
+<blockquote>
+<ol>
+<li>The security group ID of the InstanceSecurityGroup</li>
+<li>The subnet ID of PublicSubnet1</li>
+<li>The name of the key pair you created.</li>
+</ol>
+</blockquote>
+</div>
+<p>3.Build the production instance using the following cli command:</p>
+<blockquote>
+<p><strong>Note</strong>: Replace "subnet-xx" with the PublicSubnet1 ID and replace "sg-xx" with the InstanceSecurityGroup ID from your scratch pad.</p>
+</blockquote>
+<div class="codehilite"><pre><span></span>aws ec2 run-instances --iam-instance-profile <span class="nv">Name</span><span class="o">=</span>SSMLabProfile --image-id ami-0080e4c5bc078760e --instance-type t1.micro --subnet-id <span class="s2">&quot;subnet-xx&quot;</span> --security-group-ids <span class="s2">&quot;sg-xx&quot;</span> --region us-east-1 --tag-specifications <span class="s1">&#39;ResourceType=instance,Tags=[{Key=&quot;Name&quot;,Value=&quot;ProdEC2Instance&quot;},{Key=&quot;Environment&quot;,Value=&quot;Prod&quot;}]&#39;</span>
 </pre></div>
 
 
-<p>3.Build the development instance using the following cli command:
-Note: If you pick a different region, please correct the ami-id (see table below).  </p>
-<div class="codehilite"><pre><span></span>aws ec2 run-instances --iam-instance-profile <span class="nv">Name</span><span class="o">=</span>SSMLabProfile --image-id ami-0080e4c5bc078760e --instance-type t1.micro --subnet-id <span class="s2">&quot;subnet-xx&quot;</span> --security-group-ids <span class="s2">&quot;sg-xx&quot;</span> --associate-public-ip-address --tag-specifications <span class="s1">&#39;ResourceType=instance,Tags=[{Key=&quot;Name&quot;,Value=&quot;DevEC2Instance&quot;},{Key=&quot;Environment&quot;,Value=&quot;Dev&quot;}]&#39;</span>
+<p>4.Build the development instance using the following cli command:  </p>
+<blockquote>
+<p><strong>Note:</strong> Replace "subnet-xx" with the PublicSubnet1 ID and replace "sg-xx" with the InstanceSecurityGroup ID from your scratch pad.</p>
+</blockquote>
+<div class="codehilite"><pre><span></span>aws ec2 run-instances --iam-instance-profile <span class="nv">Name</span><span class="o">=</span>SSMLabProfile --image-id ami-0080e4c5bc078760e --instance-type t1.micro --subnet-id <span class="s2">&quot;subnet-xx&quot;</span> --security-group-ids <span class="s2">&quot;sg-xx&quot;</span> --region us-east-1 --tag-specifications <span class="s1">&#39;ResourceType=instance,Tags=[{Key=&quot;Name&quot;,Value=&quot;DevEC2Instance&quot;},{Key=&quot;Environment&quot;,Value=&quot;Dev&quot;}]&#39;</span>
 </pre></div>
 
 
-<p>4.Build a MOCK production on-premises instance using the following cli command:</p>
+<p>5.Build a MOCK production on-premise instance using the following cli command:</p>
+<blockquote>
+<p><strong>IMPORTANT:</strong> We are not assigning an Instance Profile as these instances will mock our on-premise servers.</p>
+<p><strong>Note:</strong> Replace "subnet-xx" with the PublicSubnet1 ID, "sg-xx" with the InstanceSecurityGroup ID and "keyname-xx" with the key pair name from your scratch pad.</p>
+</blockquote>
+<div class="codehilite"><pre><span></span>aws ec2 run-instances --image-id ami-0080e4c5bc078760e --instance-type t1.micro --subnet-id <span class="s2">&quot;subnet-xx&quot;</span> --security-group-ids <span class="s2">&quot;sg-xx&quot;</span> --region us-east-1 --key-name <span class="s2">&quot;keyname-xx&quot;</span> --tag-specifications <span class="s1">&#39;ResourceType=instance,Tags=[{Key=&quot;Name&quot;,Value=&quot;ProdOnPrem&quot;},{Key=&quot;Environment&quot;,Value=&quot;Prod&quot;}]&#39;</span>
+</pre></div>
+
+
+<p>6.Build the MOCK on-premise development instance using the following cli command:</p>
 <blockquote>
 <p><strong>IMPORTANT:</strong> We are not assigning an Instance Profile as these instances will mock our hybrid servers. <strong>Please use your own key-pair</strong>.</p>
+<p><strong>Note:</strong> Replace "subnet-xx" with the PublicSubnet1 ID, "sg-xx" with the InstanceSecurityGroup ID and "keyname-xx" with the key pair name from your scratch pad.</p>
 </blockquote>
-<div class="codehilite"><pre><span></span>aws ec2 run-instances --image-id ami-0080e4c5bc078760e --instance-type t1.micro --subnet-id <span class="s2">&quot;subnet-xx&quot;</span> --security-group-ids <span class="s2">&quot;sg-xx&quot;</span> --associate-public-ip-address --key-name <span class="s2">&quot;keyname-xx&quot;</span> --tag-specifications <span class="s1">&#39;ResourceType=instance,Tags=[{Key=&quot;Name&quot;,Value=&quot;ProdOnPrem&quot;},{Key=&quot;Environment&quot;,Value=&quot;Prod&quot;}]&#39;</span>
+<div class="codehilite"><pre><span></span>aws ec2 run-instances --image-id ami-0080e4c5bc078760e --instance-type t1.micro --subnet-id <span class="s2">&quot;subnet-xx&quot;</span> --security-group-ids <span class="s2">&quot;sg-xx&quot;</span> --region us-east-1 --key-name <span class="s2">&quot;keyname-xx&quot;</span> --tag-specifications <span class="s1">&#39;ResourceType=instance,Tags=[{Key=&quot;Name&quot;,Value=&quot;DevOnPrem&quot;},{Key=&quot;Environment&quot;,Value=&quot;Dev&quot;}]&#39;</span>
 </pre></div>
 
 
-<p>5.Build the MOCK on-premises development instance using the following cli command:</p>
+<p>8.From your Cloud9 instance use the ssh command to connect to DevOnPrem instance. You specify the path and file name of the private key (.pem), the user name for your AMI, and the private ip address for the instance. Additionally, you will need the private IPv4 address for your instance using the Amazon EC2 console. From the Amazon EC2 console check the box next to the DevOnPrem instance, a menu with details including the Private IPs will show on the bottom of the screen, copy the Private IP address associated to your DevOnPrem instance and use it below.</p>
 <blockquote>
-<p><strong>IMPORTANT:</strong> We are not assigning an Instance Profile as these instances will mock our hybrid servers. <strong>Please use your own key-pair</strong>.</p>
+<p>Note: Replace my-key-pair.pem with the name of the key-pair you created, this should be in your scratch pad. And replace 172.16.x.x with the Private IP associated with the DevOnPrem instance.</p>
 </blockquote>
-<div class="codehilite"><pre><span></span>aws ec2 run-instances --image-id ami-0080e4c5bc078760e --instance-type t1.micro --subnet-id <span class="s2">&quot;subnet-xx&quot;</span> --security-group-ids <span class="s2">&quot;sg-xx&quot;</span> --associate-public-ip-address --key-name <span class="s2">&quot;keyname-xx&quot;</span> --tag-specifications <span class="s1">&#39;ResourceType=instance,Tags=[{Key=&quot;Name&quot;,Value=&quot;DevOnPrem&quot;},{Key=&quot;Environment&quot;,Value=&quot;Dev&quot;}]&#39;</span>
+<div class="codehilite"><pre><span></span>ssh -i /path/my-key-pair.pem ec2-user@172.16.x.x
 </pre></div>
 
 
-<p>6.Update the Cloud9 security group to allow inbound SSH from <strong>172.20.0.0/16</strong>.</p>
-<p>7.From your Cloud9 instance login to <strong>DevOnPrem</strong> and Run the following commands to install SSM with the correct Activation code and ID.</p>
-<div class="codehilite"><pre><span></span>mkdir /tmp/ssm
+<ol>
+<li>Then run the following commands to install SSM.<blockquote>
+<p>Note: Replace "activation-code" and "activation-id" for the DevOnPrem instance with the code and id on your scratch pad.</p>
+</blockquote>
+</li>
+</ol>
+<div class="codehilite"><pre><span></span>sudo yum update -Y
+mkdir /tmp/ssm
 curl https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm -o /tmp/ssm/amazon-ssm-agent.rpm
 sudo yum install -y /tmp/ssm/amazon-ssm-agent.rpm
 sudo stop amazon-ssm-agent
-sudo amazon-ssm-agent -register -code <span class="s2">&quot;activation-code&quot;</span> -id <span class="s2">&quot;activation-id&quot;</span> -region <span class="s2">&quot;region&quot;</span>
+sudo amazon-ssm-agent -register -code <span class="s2">&quot;activation-code&quot;</span> -id <span class="s2">&quot;activation-id&quot;</span> -region us-east-1
 sudo start amazon-ssm-agent
 </pre></div>
 
 
-<p>8.From your Cloud9 instance login to <strong>ProdOnPrem</strong> and Run the following commands to install SSM with the correct Activation code and ID.</p>
-<div class="codehilite"><pre><span></span>mkdir /tmp/ssm
-curl https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm -o /tmp/ssm/amazon-ssm-agent.rpm
-sudo yum install -y /tmp/ssm/amazon-ssm-agent.rpm
-sudo stop amazon-ssm-agent
-sudo amazon-ssm-agent -register -code <span class="s2">&quot;activation-code&quot;</span> -id <span class="s2">&quot;activation-id&quot;</span> -region <span class="s2">&quot;region&quot;</span>
-sudo start amazon-ssm-agent
+<p>10.From your Cloud9 instance use the ssh command to connect to ProdOnPrem instance. You specify the path and file name of the private key (.pem), the user name for your AMI, and the private ip address for the instance. Additionally, you will need the private IPv4 address for your instance using the Amazon EC2 console. From the Amazon EC2 console check the box next to the ProdOnPrem instance, a menu with details including the Private IPs will show on the bottom of the screen, copy the Private IP address associated to your OnPrem instance and use it below.</p>
+<blockquote>
+<p>Note: Replace my-key-pair.pem with the name of the key-pair you created, this should be in your scratch pad. And replace 172.16.x.x with the Private IP associated with the ProdOnPrem instance.</p>
+</blockquote>
+<div class="codehilite"><pre><span></span>ssh -i /path/my-key-pair.pem ec2-user@172.16.x.x
 </pre></div>
 
 
-<p><strong>DON’T Forget to start the ssm agent after activation - sudo start amazon-ssm-agent</strong></p>
-<p>9.Log out of DevOnPrem and ProdOnPrem systems.</p>
-<h2 id="continue-to-configure-systems-manager-and-enable-hybrid-management">Continue to configure Systems Manager and enable Hybrid management</h2>
-<p>In order to use Session Manager to connect to hybrid systems SSM needs to be configured for advanced-instances tier. To enable the advanced-instances tier:</p>
+<ol>
+<li>Then run the following commands to install SSM.<blockquote>
+<p>Note: Replace "activation-code" and "activation-id" with the code and id on your scratch pad.</p>
+</blockquote>
+</li>
+</ol>
+<div class="codehilite"><pre><span></span>sudo yum update -Y
+mkdir /tmp/ssm
+curl https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm -o /tmp/ssm/amazon-ssm-agent.rpm
+sudo yum install -y /tmp/ssm/amazon-ssm-agent.rpm
+sudo stop amazon-ssm-agent
+sudo amazon-ssm-agent -register -code <span class="s2">&quot;activation-code&quot;</span> -id <span class="s2">&quot;activation-id&quot;</span> -region us-east-1
+sudo start amazon-ssm-agent
+
+<span class="nb">exit</span>
+</pre></div>
+
+
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>DON’T Forget the last command above, this command start the ssm agent after activation <em>- sudo start amazon-ssm-agent</em></p>
+</div>
+<h3 id="task-3-configure-systems-manager-to-enable-management-of-on-premise-systems">Task 3: Configure Systems Manager to enable management of on-premise systems</h3>
+<p>In order to use Session Manager to connect to on-premises systems SSM needs to be configured for advanced-instances tier. To enable the advanced-instances tier:</p>
 <p>1.Open the <strong>AWS Systems Manager</strong> console</p>
-<p>2.In the navigation pane, choose <strong>Managed instances</strong>.</p>
+<p>2.In the navigation pane, choose <em>managed instances</em>.</p>
 <p>3.Choose the <strong>Settings</strong> tab.</p>
 <p>4.Choose <strong>Change account setting</strong>.</p>
 <p>5.Review the information in the pop-up about changing account settings, and then, if you approve, choose the option to accept and click <strong>Change setting</strong>. <strong>NOTE:</strong> The system can take several minutes to complete the process of moving all instances from the standard-instances tier to the advanced-instances tier.</p>
-<p>6.Select <strong>Managed Instances</strong> You should now see a new <strong>Advanced Instances</strong> label next to the Managed Instances Heading and you can now manage hybrid systems.</p>
-<h2 id="create-iam-users-and-policy-restrictions-based-on-tags">Create IAM users and policy restrictions based on tags</h2>
+<p>6.Select <em>managed instances</em> You should now see a new <em>Advanced Instances</em> label next to the <em>managed instances</em> Heading and you can now manage on-premise systems.</p>
+<h3 id="task-4-create-iam-users-and-policy-restrictions-based-on-tags">Task 4: Create IAM users and policy restrictions based on tags</h3>
 <p><strong>NOTE:</strong> The following steps require full access to IAM.</p>
-<p>1.From your Cloud9 session, use the create-user command to create the user.</p>
+<p>1.If you started this lab using Cloud9, c0ontinue to run the following commands from your Cloud9 session, use the create-user command to create the user.</p>
 <div class="codehilite"><pre><span></span>aws iam create-user --user-name MyWorkshopUser
 </pre></div>
 
 
-<p>2.Assign a password to the user</p>
-<div class="codehilite"><pre><span></span>aws iam create-login-profile --user-name MyWorkshopUser --password <span class="s1">&#39;My!User1Login8P@ssword&#39;</span>
+<p>2.Create your own and assign a password to the user by replacing the '######' symbols with that password. Please ensure you use a complex password.</p>
+<div class="codehilite"><pre><span></span>aws iam create-login-profile --user-name MyWorkshopUser --password <span class="s1">&#39;######&#39;</span>
 </pre></div>
 
 
-<p>3.Now we will create and attach an IAM Custom Policy to MyWorkshopUser. Create a Custom IAM Policy named SSMDevAccess, <strong>Copy</strong> the json code below and paste it into a new file called <strong>SSMDevAccess.json</strong></p>
+<p>3.Now we will create and attach an IAM Custom Policy to MyWorkshopUser. Create a new file with the following contents, save the file name: SSMDevAccess.json</p>
 <blockquote>
 <p>This file must reside in the same directory where your CLI session is running, or you must specify the location.</p>
 </blockquote>
@@ -881,7 +937,7 @@ sudo start amazon-ssm-agent
 </pre></div>
 
 
-<p>5.Copy the Arn value as you will need it for the next instruction. Copy the portion to the right of the "Arn": <code>arn:aws:iam::123456789012:policy/SSMDevAccess</code>.</p>
+<p>5.Copy the Account ID to your scratch pad, you will need it for the next instruction. You can find the AWS Account ID located in an IAM policy ARN, between "iam" and "policy", do not include the : symbols i.e. the AWS Account ID is 123456789012 given the following ARN "Arn": <code>arn:aws:iam::123456789012:policy/SSMDevAccess</code>.</p>
 <p>6.To attach the policy, use the attach-user-policy command, and reference the environment variable that holds the policy ARN.</p>
 <div class="codehilite"><pre><span></span>aws iam attach-user-policy --user-name MyWorkshopUser --policy-arn arn:aws:iam::123456789012:policy/SSMDevAccess
 </pre></div>
@@ -904,25 +960,17 @@ sudo start amazon-ssm-agent
 
 <p>The result should return the following:</p>
 <div class="codehilite"><pre><span></span>{
-  &quot;AttachedPolicies&quot;: [
-    {
-        &quot;PolicyName&quot;: &quot;CloudWatchEventsReadOnlyAccess&quot;,
-        &quot;PolicyArn&quot;: &quot;arn:aws:iam::aws:policy/CloudWatchEventsReadOnlyAccess&quot;
-    },
-    {
-        &quot;PolicyName&quot;: &quot;CloudWatchLogsReadOnlyAccess&quot;,
-        &quot;PolicyArn&quot;: &quot;arn:aws:iam::aws:policy/CloudWatchLogsReadOnlyAccess&quot;
-    },
-    {
-        &quot;PolicyName&quot;: &quot;SSMDevAccess&quot;,
-        &quot;PolicyArn&quot;: &quot;arn:aws:iam::680721563572:policy/SSMDevAccess&quot;
-    }
-  ]
+    &quot;AttachedPolicies&quot;: [
+        {
+            &quot;PolicyName&quot;: &quot;SSMDevAccess&quot;,
+            &quot;PolicyArn&quot;: &quot;arn:aws:iam::aws:policy/SSMDevAccess&quot;
+        }
+    ]
 }
 </pre></div>
 
 
-<h2 id="configure-logging">Configure Logging</h2>
+<h3 id="task-5-configure-logging">Task 5: Configure Logging</h3>
 <p>Session Manager provides you with options for auditing and logging session activity in your AWS account. This allows you to do the following:</p>
 <blockquote>
 <ul>
@@ -932,7 +980,7 @@ sudo start amazon-ssm-agent
 <li>Automatically initiate another action on an AWS resource as the result of session activity, such as running an AWS Lambda function, starting an AWS CodePipeline pipeline, or running an AWS Systems Manager Run Command document.</li>
 </ul>
 </blockquote>
-<p>We will log session data using Amazon CloudWatch Logs. </p>
+<p>We will log session data using Amazon CloudWatch Logs, archive session logs to Amazon S3 and generate access reports.</p>
 <ol>
 <li>
 <p>To setup Session Manager logging in Amazon CloudWatch Logs, open the <a href="https://console.aws.amazon.com/cloudwatch/" target="_blank">CloudWatch Console</a>. In the navigation pane, choose <strong>Logs</strong></p>
@@ -947,20 +995,21 @@ sudo start amazon-ssm-agent
 <p>Now open the <a href="https://console.aws.amazon.com/systems-manager/" target="_blank">AWS Systems Manager console</a>. In the navigation pane, choose <strong>Session Manager</strong></p>
 </li>
 <li>
-<p>Select <strong>Configure Preferences</strong> You have several additional configurations options that we will not use for this lab but should consider for future use:</p>
+<p>Select <strong>Configure Preferences</strong> You have several configurations options, including:</p>
 <blockquote>
 <ul>
-<li>Log all of your session session output to Amazon S3 and Encrypt the log data.</li>
-<li>Encrypt your active session data between your users' local machine and the managed instance using KMS.</li>
-<li>Enable RunAs support for Linux instances instead of the ssm-user account.</li>
+<li>Specify Operating System user for session</li>
+<li>Enable KMS encryption for active sessions</li>
+<li>Write session output to an S3 bucket</li>
+<li>Send session output to CloudWatch Logs</li>
 </ul>
 </blockquote>
 </li>
 <li>
-<p>Select the check box next to <strong>CloudWatch logs</strong> and deselect <strong>Encrypt log data</strong>.</p>
+<p>Select the check box next to <strong>CloudWatch Logs</strong>.</p>
 </li>
 <li>
-<p>For CloudWatch logs, select <strong>Choose a log group name from the list</strong> specify the CloudWatch Logs group you just created <strong>SSM-Logs</strong> and select <strong>Save</strong>. Additionally, you can view ssm-agent logs on the instance here:</p>
+<p>Select <strong>Choose a log group name from the list</strong> specify the CloudWatch Logs group you  created <strong>SSM-Logs</strong> and select <strong>Save</strong>. Additionally, you can view ssm-agent logs on the instance here:</p>
 <blockquote>
 <ul>
 <li>/var/log/amazon/ssm/amazon-ssm-agent.log</li>
@@ -969,8 +1018,8 @@ sudo start amazon-ssm-agent
 </blockquote>
 </li>
 </ol>
-<h2 id="confirm-access">Confirm Access</h2>
-<p>1.Sign out of your current session or login into to your AWS account using a different browser as <strong>MyWorkshopUser</strong>. Go to the <a href="https://console.aws.amazon.com/systems-manager/" target="_blank">AWS Systems Manager console</a>. In the navigation pane, choose <strong>Session Manager</strong></p>
+<h3 id="task-6-confirm-appropriate-access-and-review-logs">Task 6: Confirm appropriate access and review logs</h3>
+<p>1.Logout of the AWS Management Console session or Open a different browser. Sign into the AWS account as <strong>MyWorkshopUser</strong> with the password you created earlier. Go to the <a href="https://console.aws.amazon.com/systems-manager/" target="_blank">AWS Systems Manager console</a>. In the navigation pane, choose <strong>Session Manager</strong></p>
 <p>2.Click <strong>Start session</strong>, select the <strong>ProdOnPrem</strong> name, click on <strong>start Session</strong> and a new session windows should open for you. This demonstrates that you can manage on-premise systems with Session Manager.</p>
 <p>3.In the Session Manager session type the following:</p>
 <div class="codehilite"><pre><span></span>whoami
@@ -980,17 +1029,16 @@ sudo start amazon-ssm-agent
 <p>The result should return the following:
 ssm-user</p>
 <p>3.Click Terminate to end.</p>
-<p>4.Repeat the steps above with the DevEC2Instance instance. You should find the same results, the result should return the following:
+<p>4.Repeat the steps above with the DevSSM instance. You should find the same results, the result should return the following:
 ssm-user</p>
 <p>5.Click <strong>Terminate</strong> to end.</p>
-<p>6.Now try the ProdEC2Instance instance, click start Session. The result should return the following:
+<p>6.Now try the ProdSSM instance, click start Session. The result should return the following:
 <img alt="Session Manager Access Denied" src="../images/Denied.png" /></p>
-<p>7.Click <strong>Terminate</strong> to end your session, at this point, all sessions should be terminated.</p>
-<p>8.Go to the <strong>AWS Systems Manager</strong>, click on <strong>Session Manager</strong>, click on <strong>Session History</strong>. Your sessions should show up as Terminated or Terminating. Once the session has terminated you will see a link to <strong>CloudWatch Logs</strong>.
+<p>7.Go to the <strong>AWS Systems Manager</strong>, click on <strong>Session Manager</strong>, click on <strong>Session History</strong>. Your sessions should show up as Terminated or Terminating. Once the session has terminated you will see a link to <strong>CloudWatch Logs</strong>.
 <img alt="Session Manager Logs in CloudWatch Logs" src="../images/SSM-Cloudwatch.png" /></p>
 <p>Click on it to view the audit logs of your session. CloudWatch Logs will show details of the session such as commands that were run on the host. These logs can also be stored in S3 for you.
 <img alt="Session Manager Logs in CloudWatch Logs" src="../images/CloudwatchLogs.png" /></p>
-<p>9.If you have CloudTrail enabled, you can view the Session Manager events in CloudTrail as well. Go to <strong>CloudTrail</strong> and find the Event name <strong>StartSession</strong> to view the details of your Session Manager session that CloudTrail captures. You Should see something like this:
+<p>8.If you have CloudTrail enabled, you can view the Session Manager events in CloudTrail as well however you must be login as the administrator not MyWorkshopUser. Go to <strong>CloudTrail</strong> and find the Event name <strong>StartSession</strong> to view the details of your Session Manager session that CloudTrail captures. You Should see something like this:
 <img alt="Session Manager Logs in CloudTrail" src="../images/CloudTraillog-edited.png" /></p>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <p>•   If your on-premises instances are showing offline, make sure the ssm-agent was re-started after the SSM activation process.</p>
@@ -1014,7 +1062,7 @@ ssm-user</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../01-environment-setup/" title="Module 1: Environment Build" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../01-environment-setup/" title="Module 1: Environment setup" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1023,7 +1071,7 @@ ssm-user</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Module 1: Environment Build
+                Module 1: Environment setup
               </span>
             </div>
           </a>

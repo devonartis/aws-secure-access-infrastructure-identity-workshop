@@ -13,7 +13,7 @@
         <meta name="description" content="This hands-on workshop is where you will learn about a number of AWS services that will enable you to securely administer your systems in AWS as we walk through real-world threat scenarios. Learn about the secure administration capabilities of AWS Session Manager, AWS Identity and Access Management and Amazon EC2 Instance Connect.">
       
       
-        <link rel="canonical" href="https://idm-infrastructure.awssecworkshops.com/">
+        <link rel="canonical" href="https://infrastructure-identity.awssecworkshops.com/">
       
       
         <meta name="author" content="aws-security-workshops@amazon.com">
@@ -222,7 +222,7 @@
 
   
 
-<a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/aws-samples/aws-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -231,7 +231,7 @@
     </div>
   
   <div class="md-source__repository">
-    aws-samples/aws-secure-access-infrastructure-identity-workshop
+    aws-samples/aws-infrastructure-identity-workshop
   </div>
 </a>
             </div>
@@ -309,7 +309,7 @@
 
   <!-- Site title -->
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="https://idm-infrastructure.awssecworkshops.com/"
+    <a href="https://infrastructure-identity.awssecworkshops.com/"
         title="Infrastructure Identity in AWS" class="md-nav__button md-logo">
       
         <img src="assets/images/aws_smile_logo.png" width="48" height="48" />
@@ -326,7 +326,7 @@
 
   
 
-<a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/aws-samples/aws-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -335,7 +335,7 @@
     </div>
   
   <div class="md-source__repository">
-    aws-samples/aws-secure-access-infrastructure-identity-workshop
+    aws-samples/aws-infrastructure-identity-workshop
   </div>
 </a>
     </div>
@@ -428,8 +428,8 @@
 
 
   <li class="md-nav__item">
-    <a href="01-environment-setup/" title="Module 1: Environment Build" class="md-nav__link">
-      Module 1: Environment Build
+    <a href="01-environment-setup/" title="Module 1: Environment setup" class="md-nav__link">
+      Module 1: Environment setup
     </a>
   </li>
 
@@ -565,10 +565,12 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/edit/master/docs/index.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/aws-samples/aws-infrastructure-identity-workshop/edit/master/docs/index.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
                 <h1 id="overview">Overview</h1>
+<p>Identity in AWS includes providing authentication, authorization, audit and governance for you cloud workloads. Identity services in AWS include Amazon Cognito for Application Identity and AWS Identity and Access Management (IAM) for AWS Management Console and Command Line Interface (CLI) access and Infrastructure Identity. Infrastructure identity includes access to operating systems, relational databases and containers.  This workshop focuses on infrastructure identity where you can utilize IAM Users, Roles and Policies to grant access to infrastructure such as EC2, RDS and ECS.
+<img alt="Identity in AWS" src="images/Identity Cake.png" title="Identity in AWS" /></p>
 <p>This workshop is designed to help you get familiar with AWS Security services and learn how to use them to securely administer systems in your environment.  You'll be working with services such as AWS Systems Manager Session Manager, Amazon EC2 Instance Connect, and AWS Identity and Access Management. You will learn how to use these services to securely connect and administer your Amazon EC2 Instances as well as systems on-premise, you will setup tagged based access, and configure logging which will enable auditing of administrative activities and improve the security posture of your environment.</p>
 <ul>
 <li><strong>Level</strong>: Intermediate</li>
@@ -578,10 +580,10 @@
 <li><strong><a href="https://awssecworkshops.com/getting-started/" target="_blank">Prerequisites</a href></strong>: AWS Account, Admin IAM User</li>
 </ul>
 <h2 id="scenario">Scenario</h2>
-<p>Your company is new to the cloud and has deployed their first set of development and productions systems in AWS, additionally you still have hosts to manage in your data center.  You are a systems administrator and have been tasked with setting up secure administrative access to your systems in AWS and on-premise.  As part of that configuration you are also responsible for confirm the ability to audit administrative activities.</p>
+<p>Your company is new to the cloud and has deployed their first set of development and productions systems in AWS, additionally you still have hosts to manage in your data center.  You are a systems administrator and have been tasked with setting up secure administrative access to your systems in AWS and on-premise.  As part of that configuration you are also responsible for confirming that you can audit administrative activities. Security has found that ssh keys are not properly secured and is asking for a better solution to secure administration of your on-premise systems and your EC2 Instances in AWS. Your security team has asked if there is way to centrally manage administrative access to systems and have full audit capabilities.</p>
 <h2 id="architecture">Architecture</h2>
-<p>For this Workshop you will have a 4 instances setup in the us-east-1 region, two instances will be your EC2 instances, the other two instances will be mock on-premise servers. Security has found that ssh keys are not properly secured and is asking for a better solution to secure administration of your on-premise systems and your EC2 Instances in AWS. Your security team has asked if there is way to centrally manage administrative access to systems and have full audit capabilities.</p>
-<p><img alt="Architecture" src="images/diagram-basic-arch.png" title="Workload Architecture" /></p>
+<p>In the first module we launch 4 instances in the us-east-1 region, 2 instances will be your EC2 instances, the other 2 instances will be mock on-premise servers. Additionally, we will be build a Cloud9 IDE environment and use this as our workspace for the workshop. <a href=https://aws.amazon.com/cloud9  target="_blank">AWS Cloud9</a> is a cloud-based integrated development environment (IDE) that lets you write, run, and debug your code with just a browser. It includes a code editor, debugger, and terminal. Cloud9 comes pre-packaged with essential tools for popular programming languages and the AWS Command Line Interface (CLI) pre-installed so you don’t need to install files or configure your laptop for this workshop.</p>
+<p><img alt="Architecture" src="images/diagram-basic-arch2.png" title="Workload Architecture" /></p>
 <h2 id="presentation-deck">Presentation deck</h2>
 <p><a href="infrastructure-identity-workshop-presentation.pdf">Workshop Presentation Deck</a></p>
 <h2 id="region">Region</h2>
@@ -589,7 +591,7 @@
 <h2 id="modules">Modules</h2>
 <p>This workshop is broken up into the four modules below:</p>
 <ol>
-<li><a href="01-environment-setup/">Environment Build and Configuration</a></li>
+<li><a href="01-environment-setup/">Environment setup</a></li>
 <li><a href="02-using-AWS-Systems-Manager-Session-Manager/">Session Manager</a></li>
 <li><a href="03-using-EC2-Instance-Connect/">EC2-Instance-Connect</a></li>
 <li><a href="04-cleanup/">Clean-up</a></li>
@@ -615,13 +617,13 @@
       <nav class="md-footer-nav__inner md-grid">
         
         
-          <a href="01-environment-setup/" title="Module 1: Environment Build" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="01-environment-setup/" title="Module 1: Environment setup" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Module 1: Environment Build
+                Module 1: Environment setup
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

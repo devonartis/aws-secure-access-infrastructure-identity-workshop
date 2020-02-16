@@ -13,7 +13,7 @@
         <meta name="description" content="This hands-on workshop is where you will learn about a number of AWS services that will enable you to securely administer your systems in AWS as we walk through real-world threat scenarios. Learn about the secure administration capabilities of AWS Session Manager, AWS Identity and Access Management and Amazon EC2 Instance Connect.">
       
       
-        <link rel="canonical" href="https://idm-infrastructure.awssecworkshops.com/03-using-EC2-Instance-Connect/">
+        <link rel="canonical" href="https://infrastructure-identity.awssecworkshops.com/03-using-EC2-Instance-Connect/">
       
       
         <meta name="author" content="aws-security-workshops@amazon.com">
@@ -222,7 +222,7 @@
 
   
 
-<a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/aws-samples/aws-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -231,7 +231,7 @@
     </div>
   
   <div class="md-source__repository">
-    aws-samples/aws-secure-access-infrastructure-identity-workshop
+    aws-samples/aws-infrastructure-identity-workshop
   </div>
 </a>
             </div>
@@ -309,7 +309,7 @@
 
   <!-- Site title -->
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="https://idm-infrastructure.awssecworkshops.com/"
+    <a href="https://infrastructure-identity.awssecworkshops.com/"
         title="Infrastructure Identity in AWS" class="md-nav__button md-logo">
       
         <img src="../assets/images/aws_smile_logo.png" width="48" height="48" />
@@ -326,7 +326,7 @@
 
   
 
-<a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/aws-samples/aws-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -335,7 +335,7 @@
     </div>
   
   <div class="md-source__repository">
-    aws-samples/aws-secure-access-infrastructure-identity-workshop
+    aws-samples/aws-infrastructure-identity-workshop
   </div>
 </a>
     </div>
@@ -362,8 +362,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../01-environment-setup/" title="Module 1: Environment Build" class="md-nav__link">
-      Module 1: Environment Build
+    <a href="../01-environment-setup/" title="Module 1: Environment setup" class="md-nav__link">
+      Module 1: Environment setup
     </a>
   </li>
 
@@ -537,7 +537,7 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/edit/master/docs/03-using-EC2-Instance-Connect.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/aws-samples/aws-infrastructure-identity-workshop/edit/master/docs/03-using-EC2-Instance-Connect.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
                 <h1 id="module-3-using-amazon-ec2-instance-connect">Module 3: Using Amazon EC2 Instance Connect</h1>
@@ -561,7 +561,7 @@
 <blockquote>
 <p>Before you run the command below remove all quotes and replace "subnet-xx" and "sg-xx" with the information from the previous step and your SSH key.</p>
 </blockquote>
-<div class="codehilite"><pre><span></span>aws ec2 run-instances --image-id ami-026c8acd92718196b --instance-type t1.micro --subnet-id subnet-xx --security-group-ids sg-xx --associate-public-ip-address --tag-specifications <span class="s1">&#39;ResourceType=instance,Tags={Key=&quot;Name&quot;,Value=&quot;EC2ConnectInstance&quot;}&#39;</span> --user-data file://connect-install.txt
+<div class="codehilite"><pre><span></span>aws ec2 run-instances --image-id ami-026c8acd92718196b --instance-type t1.micro --subnet-id subnet-xx --security-group-ids sg-xx --region us-east-1 --associate-public-ip-address --tag-specifications <span class="s1">&#39;ResourceType=instance,Tags={Key=&quot;Name&quot;,Value=&quot;EC2ConnectInstance&quot;}&#39;</span> --user-data file://connect-install.txt
 </pre></div>
 
 
@@ -572,7 +572,7 @@
 
 <p>6.Update the Cloud9 security group named <strong>aws-cloud9-InfrastructureIdentity-Env-Setup-Cloud9Instance-</strong> to allow inbound SSH from <strong>0.0.0.0/0</strong>.</p>
 <h2 id="iam-roles-and-permissions-to-enable-ec2-instance-connect">IAM roles and permissions to enable EC2 Instance Connect</h2>
-<p>1.Now we will create and attach an IAM Custom Policy to MyWorkshopUser. Create a Custom IAM Policy named InstanceConnect.json. Update the "i-xx" with the instance-id that you noted earlier. Copy the json code below and paste it into a new file called InstanceConnect.json</p>
+<p>1.Now we will create and attach an IAM Customer Managed Policy to MyWorkshopUser. Create a new file with the following contents but <strong>Replace</strong> the "i-xx" with the instance-id that you noted earlier, save the file name: InstanceConnect.json</p>
 <blockquote>
 <p>This file must reside in the same directory where your CLI session is running, or you must specify the location.</p>
 </blockquote>
@@ -621,13 +621,16 @@
 </pre></div>
 
 
-<p>3.To attach the policy, use the attach-user-policy command, and reference the environment variable that holds the policy ARN.</p>
+<ol>
+<li>This above command will output a policy ARN for the policy we just created. Copy this ARN from the prior output and replace it in the next command.</li>
+</ol>
+<p>3.To attach the policy, use the attach-user-policy command, and use the policy ARN output from above.</p>
 <div class="codehilite"><pre><span></span>aws iam attach-user-policy --user-name MyWorkshopUser --policy-arn arn:aws:iam::abc123:policy/InstanceConnect
 </pre></div>
 
 
 <h2 id="confirm-access">Confirm Access</h2>
-<p>1.You can connect to an instance as the MyWorkshopUser, login as that user with a different browser.</p>
+<p>1.Now using a different browser or sign out of the AWS Management Console and sign back in as MyWorkshopUser. </p>
 <p>2.Go to <strong>EC2</strong>, select <strong>Instances</strong>, select the <strong>EC2ConnectInstance</strong>. Select <strong>Connect</strong> and choose the option to <strong>connect with EC2 Instance Connect (browser-based SSH connection)</strong>. Update the user name to <strong>ubuntu</strong>. EC2 Instance Connect performs the following three actions in one call: it generates a one-time-use SSH public key, pushes the key to the instance where it remains for 60 seconds, and connects the user to the instance. You can use basic SSH/SFTP commands with the Instance Connect CLI.</p>
 <p>3.You should see the EC2 Instance Connect (browser-based SSH connection) appear.</p>
 <p><img alt="EC2 Instance Connection" src="../images/InstanceConnectUbuntu.png" /></p>
