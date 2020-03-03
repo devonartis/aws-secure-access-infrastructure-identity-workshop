@@ -222,7 +222,7 @@
 
   
 
-<a href="https://github.com/aws-samples/aws-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -231,7 +231,7 @@
     </div>
   
   <div class="md-source__repository">
-    aws-samples/aws-infrastructure-identity-workshop
+    aws-samples/aws-secure-access-infrastructure-identity-workshop
   </div>
 </a>
             </div>
@@ -326,7 +326,7 @@
 
   
 
-<a href="https://github.com/aws-samples/aws-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -335,7 +335,7 @@
     </div>
   
   <div class="md-source__repository">
-    aws-samples/aws-infrastructure-identity-workshop
+    aws-samples/aws-secure-access-infrastructure-identity-workshop
   </div>
 </a>
     </div>
@@ -425,16 +425,36 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#terminate-the-amazon-ec2-instances" title="Terminate the Amazon EC2 Instances" class="md-nav__link">
-    Terminate the Amazon EC2 Instances
+  <a href="#tasks" title="Tasks" class="md-nav__link">
+    Tasks
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#task-1-terminate-the-amazon-ec2-instances" title="Task 1: Terminate the Amazon EC2 Instances" class="md-nav__link">
+    Task 1: Terminate the Amazon EC2 Instances
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#delete-the-aws-cloudformation-stack" title="Delete the AWS CloudFormation stack" class="md-nav__link">
-    Delete the AWS CloudFormation stack
+        
+          <li class="md-nav__item">
+  <a href="#task-2-delete-the-aws-cloudformation-stack" title="Task 2: Delete the AWS CloudFormation stack" class="md-nav__link">
+    Task 2: Delete the AWS CloudFormation stack
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task-3-delete-the-iam-user" title="Task 3: Delete the IAM User" class="md-nav__link">
+    Task 3: Delete the IAM User
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -494,16 +514,36 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#terminate-the-amazon-ec2-instances" title="Terminate the Amazon EC2 Instances" class="md-nav__link">
-    Terminate the Amazon EC2 Instances
+  <a href="#tasks" title="Tasks" class="md-nav__link">
+    Tasks
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#task-1-terminate-the-amazon-ec2-instances" title="Task 1: Terminate the Amazon EC2 Instances" class="md-nav__link">
+    Task 1: Terminate the Amazon EC2 Instances
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#delete-the-aws-cloudformation-stack" title="Delete the AWS CloudFormation stack" class="md-nav__link">
-    Delete the AWS CloudFormation stack
+        
+          <li class="md-nav__item">
+  <a href="#task-2-delete-the-aws-cloudformation-stack" title="Task 2: Delete the AWS CloudFormation stack" class="md-nav__link">
+    Task 2: Delete the AWS CloudFormation stack
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task-3-delete-the-iam-user" title="Task 3: Delete the IAM User" class="md-nav__link">
+    Task 3: Delete the IAM User
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -523,12 +563,18 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/aws-samples/aws-infrastructure-identity-workshop/edit/master/docs/04-cleanup.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/edit/master/docs/04-cleanup.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
                 <h1 id="module-4-cleanup">Module 4: Cleanup</h1>
 <p>In the last module we will terminate the instances we built and delete the CloudFormation stack.</p>
-<h2 id="terminate-the-amazon-ec2-instances">Terminate the Amazon EC2 Instances</h2>
+<h2 id="tasks">Tasks</h2>
+<ol>
+<li>Terminate the Amazon EC2 Instances</li>
+<li>Delete the CloudFormation Stack</li>
+<li>Delete the IAM User</li>
+</ol>
+<h3 id="task-1-terminate-the-amazon-ec2-instances">Task 1: Terminate the Amazon EC2 Instances</h3>
 <p>1.You must perform the following cleanup steps using your Admin Session.</p>
 <p>2.Go to the EC2 <a href="https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#Instances:sort=statusChecks" target="_blank">Console</a>: <strong>Select</strong> the following Amazon Ec2 Instances that were created as part of Module 2:</p>
 <blockquote>
@@ -541,10 +587,11 @@
 </ul>
 </blockquote>
 <p>3.Click on <strong>Actions</strong>, click on <strong>Instance State</strong>, and select <strong>Terminate</strong>. You will get a Warning, click <strong>Yes, Terminate</strong>.</p>
-<h2 id="delete-the-aws-cloudformation-stack">Delete the AWS CloudFormation stack</h2>
-<p>1.Go to the CloudFormation
-<a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks" target="_blank">Console</a>. Select 'InfrastructureIdentity-Env-Setup', select <strong>Actions</strong> and click on <strong>Delete Stack</strong>. At the prompt, select <strong>Yes, Delete</strong></p>
-<p>2.Go to IAM, click on Users, select MyWorkshopUser and delete.</p>
+<h3 id="task-2-delete-the-aws-cloudformation-stack">Task 2: Delete the AWS CloudFormation stack</h3>
+<p>1.Go to the
+<a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks" target="_blank">CloudFormation Console</a>. Select 'InfrastructureIdentity-Env-Setup', select <strong>Actions</strong> and click on <strong>Delete Stack</strong>. At the prompt, select <strong>Yes, Delete</strong></p>
+<h3 id="task-3-delete-the-iam-user">Task 3: Delete the IAM User</h3>
+<p>1.Go to the <a href="https://console.aws.amazon.com/iam/home?#/home" target="_blank">IAM console</a>, click on <strong>Users</strong>, select <strong>MyWorkshopUser</strong> and delete.</p>
                 
                   
                 

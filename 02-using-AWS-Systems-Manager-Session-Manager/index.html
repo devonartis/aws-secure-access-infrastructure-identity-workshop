@@ -222,7 +222,7 @@
 
   
 
-<a href="https://github.com/aws-samples/aws-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -231,7 +231,7 @@
     </div>
   
   <div class="md-source__repository">
-    aws-samples/aws-infrastructure-identity-workshop
+    aws-samples/aws-secure-access-infrastructure-identity-workshop
   </div>
 </a>
             </div>
@@ -326,7 +326,7 @@
 
   
 
-<a href="https://github.com/aws-samples/aws-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -335,7 +335,7 @@
     </div>
   
   <div class="md-source__repository">
-    aws-samples/aws-infrastructure-identity-workshop
+    aws-samples/aws-secure-access-infrastructure-identity-workshop
   </div>
 </a>
     </div>
@@ -416,15 +416,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#task-2-configure-session-manager-to-manage-systems-on-premises" title="Task 2: Configure Session Manager to manage systems on-premises" class="md-nav__link">
-    Task 2: Configure Session Manager to manage systems on-premises
+  <a href="#task-2-setup-aws-systems-manager-to-manage-systems-on-premises" title="Task 2: Setup AWS Systems Manager to manage systems on-premises" class="md-nav__link">
+    Task 2: Setup AWS Systems Manager to manage systems on-premises
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#task-2-create-instances-and-install-the-ssm-agent" title="Task 2: Create instances and install the SSM Agent" class="md-nav__link">
-    Task 2: Create instances and install the SSM Agent
+  <a href="#task-3-create-instances-and-install-the-ssm-agent" title="Task 3: Create instances and install the SSM Agent" class="md-nav__link">
+    Task 3: Create instances and install the SSM Agent
   </a>
   
 </li>
@@ -564,15 +564,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#task-2-configure-session-manager-to-manage-systems-on-premises" title="Task 2: Configure Session Manager to manage systems on-premises" class="md-nav__link">
-    Task 2: Configure Session Manager to manage systems on-premises
+  <a href="#task-2-setup-aws-systems-manager-to-manage-systems-on-premises" title="Task 2: Setup AWS Systems Manager to manage systems on-premises" class="md-nav__link">
+    Task 2: Setup AWS Systems Manager to manage systems on-premises
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#task-2-create-instances-and-install-the-ssm-agent" title="Task 2: Create instances and install the SSM Agent" class="md-nav__link">
-    Task 2: Create instances and install the SSM Agent
+  <a href="#task-3-create-instances-and-install-the-ssm-agent" title="Task 3: Create instances and install the SSM Agent" class="md-nav__link">
+    Task 3: Create instances and install the SSM Agent
   </a>
   
 </li>
@@ -633,11 +633,11 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/aws-samples/aws-infrastructure-identity-workshop/edit/master/docs/02-using-AWS-Systems-Manager-Session-Manager.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/edit/master/docs/02-using-AWS-Systems-Manager-Session-Manager.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
                 <h1 id="module-2-session-manager-30-minutes">Module 2: Session Manager ~ 30 minutes</h1>
-<p>We were given the task to setup secure administrative access to our instances but we know that anytime someone logs into a server changes can be made and those changes could inadvertently affect the security of the host. Instead of hoping our system security doesn't change, let's change the access pattern and restrict all access into production systems. This approach to administrative access is called <em>Immutable Infrastructure</em>, which includes managing services and software deployments on IT resources wherein components are replaced rather than changed. An application or service is effectively redeployed each time changes are required. Given this is a new access pattern for our team, we will continue to allow access to our development systems. Using Amazon Systems Manager Session Manager and AWS IAM with tag based permissions we will implement this exact scenario and review the audit logs.</p>
+<p>We were given the task to setup secure administrative access to our instances but we know that anytime someone logs into a system changes can be made and those changes could inadvertently affect the security of the host. Instead of hoping our system security doesn't change, let's ensure all changes introduced into production are treated like a code release which go through our standard deployment pipeline, this pipeline includes appropriate security and configuration checks as well as code reviews. Given this change to our process we will restrict all access into production systems. This approach to administrative access is called <em>Immutable Infrastructure</em>, which includes managing services and software deployments on IT resources wherein components are replaced rather than changed. An application or service is effectively redeployed each time changes are required. Given this is a new access pattern for our team, we will continue to allow access to our development systems. Using Amazon Systems Manager Session Manager and AWS IAM with tag based permissions we will implement this exact scenario and review the audit logs.</p>
 <p>In this Module we will create IAM roles with permissions to enable Session Manager access. Additionally, we are going to deploy 4 systems:</p>
 <ul>
 <li>AWS EC2 Instance tagged with development</li>
@@ -661,24 +661,13 @@
 <li>Confirm appropriate access and review logs</li>
 </ol>
 <h3 id="task-1-create-iam-roles-and-permissions-to-enable-session-manager-for-amazon-ec2-instances">Task 1: Create IAM roles and permissions to enable Session Manager for Amazon EC2 Instances</h3>
-<ol>
-<li>
-<p>Navigate to the <a href="https://us-east-1.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console.</p>
-</li>
-<li>
-<p>On the left side of the Cloud9 Console is a menu, Click on <strong>Account environments</strong> and select <strong>Open IDE</strong> on the environment that has been deployed for you. Perform the following commands in the same terminal window that you setup your credentials.</p>
-</li>
-<li>
-<p>Create an instance profile:</p>
-</li>
-</ol>
+<p>1.Return to the <a href="https://us-east-1.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console and use the tab that you opened in   Module 1.</p>
+<p>2.Create an instance profile:</p>
 <div class="codehilite"><pre><span></span>aws iam create-instance-profile --instance-profile-name SSMLabProfile
 </pre></div>
 
 
-<ol>
-<li>Create the json trust policy doc to attach to the IAM role. Create a new file with the following contents, save the file name: <strong>lab-role-trust-policy.json</strong>:</li>
-</ol>
+<p>3.Create the json trust policy doc to attach to the IAM role. Create a new file with the following contents, save the file name: <strong>lab-role-trust-policy.json</strong>:</p>
 <div class="codehilite"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
   <span class="nt">&quot;Statement&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -690,35 +679,22 @@
 </pre></div>
 
 
-<ol>
-<li>Create an IAM role using the trust policy above:</li>
-</ol>
+<p>4.Create an IAM role using the trust policy above:</p>
 <div class="codehilite"><pre><span></span>aws iam create-role --role-name SSMLabRole --assume-role-policy-document file://lab-role-trust-policy.json
 </pre></div>
 
 
-<ol>
-<li>Add the role to the instance profile:</li>
-</ol>
+<p>5.Add the role to the instance profile:</p>
 <div class="codehilite"><pre><span></span>aws iam add-role-to-instance-profile --role-name SSMLabRole --instance-profile-name SSMLabProfile
 </pre></div>
 
 
-<ol>
-<li>Attach the existing <strong>EC2RoleSSMAccess</strong> to the newly created instance-profile:</li>
-</ol>
+<p>6.Attach the existing <strong>EC2RoleSSMAccess</strong> to the newly created instance-profile:</p>
 <div class="codehilite"><pre><span></span>aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM --role-name SSMLabRole
 </pre></div>
 
 
-<ol>
-<li>
-<p>Attach the instance profile to the system.</p>
-</li>
-<li>
-<p>Create the json trust policy doc to attach to the IAM role. Create a new file with the following contents, save the file name: ssmservice-trust-policy.json</p>
-</li>
-</ol>
+<p>7.Create the json trust policy doc to attach to the IAM role. Create a new file with the following contents, save the file name: <strong>ssmservice-trust-policy.json</strong></p>
 <div class="codehilite"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
   <span class="nt">&quot;Statement&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -730,122 +706,204 @@
 </pre></div>
 
 
-<ol>
-<li>Create a new role named <strong>SSMServiceRole</strong>:</li>
-</ol>
+<p>8.Create a new role named <strong>SSMServiceRole</strong> and attach the trust policy you created in the previous step:</p>
 <div class="codehilite"><pre><span></span>aws iam create-role --role-name SSMServiceRole --assume-role-policy-document file://ssmservice-trust-policy.json
 </pre></div>
 
 
-<ol>
-<li>As a starting point, we will use AmazonSSMManagedInstanceCore grant permission for Systems Manager to interact with your instances. AmazonSSMManagedInstanceCore, enables an instance to use AWS Systems Manager service core functionality. Depending on your operations plan, you might need permissions represented in one or more of the other three policies. To view this policy in the console go to services, IAM, Access Management, Policies and search for the <strong>AmazonSSMManagedInstanceCore</strong> policy, click on the policy, view the permissions by clicking on the permissions tab. Now attach this policy to the role using attach-role-policy command.</li>
-</ol>
+<p>9.As a starting point, we will use AmazonSSMManagedInstanceCore to grant permission for Systems Manager to interact with your instances. AmazonSSMManagedInstanceCore, enables an instance to use AWS Systems Manager service core functionality. Depending on your operations plan, you might need permissions represented in one or more of the other three policies. To view this policy in the console go to services, IAM, Access Management, Policies and search for the <strong>AmazonSSMManagedInstanceCore</strong> policy, click on the policy, view the permissions by clicking on the permissions tab. Now attach this policy to the role using attach-role-policy command.</p>
 <div class="codehilite"><pre><span></span>aws iam attach-role-policy --role-name SSMServiceRole --policy-arn arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
 </pre></div>
 
 
-<ol>
-<li>Let's make sure we allow our on-premises systems to write to CloudWatchLogs so that we can use the same Audit and Logging tools to review administrative access. We'll use the same Attach-role-policy to attach a policy that enables the SSMServiceRole to write to CloudWatchLogs.</li>
-</ol>
+<p>10.Let's make sure we allow our on-premises systems to write to CloudWatchLogs so that we can use the same Audit and Logging tools to review administrative access. We'll use the same Attach-role-policy to attach a policy that enables the SSMServiceRole to write to CloudWatchLogs.</p>
 <div class="codehilite"><pre><span></span>aws iam attach-role-policy --role-name SSMServiceRole --policy-arn arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
 </pre></div>
 
 
-<h3 id="task-2-configure-session-manager-to-manage-systems-on-premises">Task 2: Configure Session Manager to manage systems on-premises</h3>
-<p>The activation process provides an Activation Code and ID which functions like an access key ID and secret key to provide secure access to the Systems Manager service form your <em>managed instances</em>.</p>
+<p>11.Let's confirm all the correct policies are attached to our role. Run the following command.</p>
+<div class="codehilite"><pre><span></span>aws iam list-attached-role-policies --role-name SSMServiceRole
+</pre></div>
+
+
+<p>The result should return the following:</p>
+<div class="codehilite"><pre><span></span>{
+    &quot;AttachedPolicies&quot;: [
+        {
+            &quot;PolicyName&quot;: &quot;CloudWatchAgentServerPolicy&quot;,
+            &quot;PolicyArn&quot;: &quot;arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy&quot;
+        },
+        {
+            &quot;PolicyName&quot;: &quot;AmazonSSMManagedInstanceCore&quot;,
+            &quot;PolicyArn&quot;: &quot;arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore&quot;
+        }
+    ]
+}
+</pre></div>
+
+
+<p>12.Let's also confirm the trust policy is correct. We want to confirm that for the Principal in the AssumeRolePolicyDocument is <strong>"Service":"ssm.amazonaws.com"</strong>, which allows the AWS Systems Manager Service the permissions granted in the policies we attached and listed in the previous steps. Run the following command:</p>
+<div class="codehilite"><pre><span></span>aws iam get-role --role-name SSMServiceRole
+</pre></div>
+
+
+<p>The result should return the following:</p>
+<div class="codehilite"><pre><span></span>{
+    &quot;Role&quot;: {
+        &quot;AssumeRolePolicyDocument&quot;: {
+            &quot;Version&quot;: &quot;2012-10-17&quot;,
+            &quot;Statement&quot;: [
+                {
+                    &quot;Action&quot;: &quot;sts:AssumeRole&quot;,
+                    &quot;Effect&quot;: &quot;Allow&quot;,
+                    &quot;Principal&quot;: {
+                        &quot;Service&quot;: &quot;ssm.amazonaws.com&quot;
+                    }
+                }
+            ]
+        },
+        &quot;MaxSessionDuration&quot;: 3600,
+        &quot;RoleId&quot;: &quot;AROATXJRVGL4QLCVNGI77&quot;,
+        &quot;CreateDate&quot;: &quot;2020-03-03T14:59:37Z&quot;,
+        &quot;RoleName&quot;: &quot;SSMServiceRole&quot;,
+        &quot;Path&quot;: &quot;/&quot;,
+        &quot;RoleLastUsed&quot;: {},
+        &quot;Arn&quot;: &quot;arn:aws:iam::256191574777:role/SSMServiceRole&quot;
+    }
+}
+</pre></div>
+
+
+<h3 id="task-2-setup-aws-systems-manager-to-manage-systems-on-premises">Task 2: Setup AWS Systems Manager to manage systems on-premises</h3>
+<p>The activation process provides an Activation Code and ID which functions like an access key ID and secret key to provide secure access to the Systems Manager service from your <em>managed instances</em>.</p>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
 <p>If you've been using the Cloud9IDE in this lab please continue to run these commands from there.</p>
 </div>
-<p>1.Open the command line, Create a managed-instance activation for your Dev instance, copy the "activation-code" and "activation-id" and label it as you DevOnPrem in your scratch pad, we will use it later.</p>
+<p>1.In your Cloud9IDE, using the same tab, create a managed-instance activation for your Dev instance, copy the "activation-code" and "activation-id" and label it as <strong>DevOnPrem</strong> in your scratch pad, we will use it later.</p>
 <div class="codehilite"><pre><span></span>aws ssm create-activation --default-instance-name DevOnPrem --iam-role SSMServiceRole --registration-limit <span class="m">10</span> --region us-east-1
 </pre></div>
 
 
-<p>2.Create a managed-instance activation for your Prod instance, copy the "activation-code" and "activation-id" and label it as you ProdOnPrem in your scratch pad, we will use it later.</p>
+<p>2.Create a managed-instance activation for your Prod instance, copy the "activation-code" and "activation-id" and label it as <strong>ProdOnPrem</strong> in your scratch pad, we will use it later.</p>
 <div class="codehilite"><pre><span></span>aws ssm create-activation --default-instance-name ProdOnPrem --iam-role SSMServiceRole --registration-limit <span class="m">10</span> --region us-east-1
 </pre></div>
 
 
 <p><strong>Store the managed-instance Activation Code and Activation ID in a safe place.</strong> You specify this Code and ID when you install SSM Agent on systems on-premises. The code and ID combination functions like an Amazon EC2 access key ID and secret key to provide secure access to the Systems Manager service from your <em>managed instances</em>.</p>
 <blockquote>
-<p>If you lose the Code and ID, you must create a new activation. An activation expiration is a window of time when you can register on-premisess machines with Systems Manager, default is 24 hours. An expired activation has no impact on your servers or virtual machines (VMs) that you registered with Systems Manager. This means that if an activation expires then you can’t register more servers or VMs with Systems Manager by using that specific activation. You simply need to create a new one. All of the servers and VMs that you registered will continue to be registered Systems Manager <em>managed instances</em> until you remove or disable SSM Agent on the server or VM and thereby unregister it. <a href="https://docs.aws.amazon.com/cli/latest/reference/ssm/create-activation.html" target="_blank">For more details:</a></p>
+<p>If you lose the Code and ID, you must create a new activation. An activation expiration is a window of time when you can register on-premises machines with Systems Manager, default is 24 hours. An expired activation has no impact on your servers or virtual machines (VMs) that you registered with Systems Manager. This means that if an activation expires then you can’t register more servers or VMs with Systems Manager by using that specific activation code. You simply need to create a new one. All of the servers and VMs that you registered will continue to be registered Systems Manager <em>managed instances</em> until you remove or disable SSM Agent on the server or VM and thereby unregister it. <a href="https://docs.aws.amazon.com/cli/latest/reference/ssm/create-activation.html" target="_blank">For more details:</a></p>
 </blockquote>
-<h3 id="task-2-create-instances-and-install-the-ssm-agent">Task 2: Create instances and install the SSM Agent</h3>
-<p>Please note that in order to create a mock on-premises system we will be creating and using a key-pair and not using them for the AWS EC2 instances. We do not need a key pair for the AWS EC2 instances because we are using Session Manager to gain direct access.</p>
+<h3 id="task-3-create-instances-and-install-the-ssm-agent">Task 3: Create instances and install the SSM Agent</h3>
+<p>Please note that in order to create a mock on-premises system we need to create and use key-pair for initial access to install the Systems Manager agent. We do not need a key pair for the AWS EC2 instances because we are using Session Manager to gain direct access.</p>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
 <p>If you are using Cloud9, please perform the following on the Cloud9 instance.</p>
 </div>
-<ol>
-<li>Create a key pair for SSH access to the on-premises systems. Follow the instructions for <strong>Creating a Key Pair Using Amazon EC2</strong><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair"_blank"> here.</a> Copy the name of your key pair to your scratch pad.</li>
-</ol>
+<p>1.Create a key pair for SSH access to the on-premises systems. Choose a key name that you can remember, and replace MyKeyPair with that name.</p>
+<div class="codehilite"><pre><span></span>aws ec2 create-key-pair --key-name MyKeyPair --query <span class="s1">&#39;KeyMaterial&#39;</span> --output text &gt; MyKeyPair.pem
+</pre></div>
+
+
+<p>2.Update the permissions on the private key file so that only you can read it.</p>
+<div class="codehilite"><pre><span></span>chmod <span class="m">400</span> MyKeyPair.pem
+</pre></div>
+
+
+<p>3.Copy the name of your key pair to your scratch pad.</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
 <p>What is a Key Pair?</p>
 <p>Amazon EC2 uses public key cryptography to encrypt and decrypt login information. Public key cryptography uses a public key to encrypt a piece of data, and then the recipient uses the private key to decrypt the data. The public and private keys are known as a key pair. Public key cryptography enables you to securely access your instances using a private key instead of a password.</p>
 <p>When you launch an instance, you specify the key pair. You can specify an existing key pair or a new key pair that you create at launch. At boot time, the public key content is placed on the instance in an entry within ~/.ssh/authorized_keys. To log in to your instance, you must specify the private key when you connect to the instance.</p>
 </div>
-<p>2.Go back to the CloudFormation Stack, find the stack that starts with "aws-cloud9-" click on <strong>Resources</strong>, copy the ID next to the <strong>InstanceSecurityGroup</strong> to a scratch pad. Now find the stack named "InfrastructureIdentity-Env-Setup", click on <strong>Resources</strong>, copy the ID next to <strong>PublicSubnet1</strong> to the same scratch pad, you will need them for the following steps.</p>
+<p>4.Go back to the CloudFormation Stack, copy the following to your scratchpad:</p>
+<ul>
+<li>Find the stack that starts with "aws-cloud9-" click on <strong>Resources</strong>, copy the ID next to the <strong>InstanceSecurityGroup</strong></li>
+<li>Find the stack named "InfrastructureIdentity-Env-Setup", click on <strong>Resources</strong>, copy the ID next to <strong>PublicSubnet1</strong> to the same scratch pad</li>
+</ul>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>At this point, make sure you have captured 3 items on your scratch pad:</p>
 <blockquote>
 <ol>
-<li>The security group ID of the InstanceSecurityGroup</li>
-<li>The subnet ID of PublicSubnet1</li>
-<li>The name of the key pair you created.</li>
+<li>SECGROUP - the security group ID of the InstanceSecurityGroup</li>
+<li>SUBNET - the subnet ID of PublicSubnet1</li>
+<li>MYKEYPAIR - the name of the key pair you created.</li>
 </ol>
 </blockquote>
 </div>
-<p>3.Build the production instance using the following cli command:</p>
-<blockquote>
-<p><strong>Note</strong>: Replace "subnet-xx" with the PublicSubnet1 ID and replace "sg-xx" with the InstanceSecurityGroup ID from your scratch pad.</p>
-</blockquote>
-<div class="codehilite"><pre><span></span>aws ec2 run-instances --iam-instance-profile <span class="nv">Name</span><span class="o">=</span>SSMLabProfile --image-id ami-0080e4c5bc078760e --instance-type t1.micro --subnet-id <span class="s2">&quot;subnet-xx&quot;</span> --security-group-ids <span class="s2">&quot;sg-xx&quot;</span> --region us-east-1 --tag-specifications <span class="s1">&#39;ResourceType=instance,Tags=[{Key=&quot;Name&quot;,Value=&quot;ProdEC2Instance&quot;},{Key=&quot;Environment&quot;,Value=&quot;Prod&quot;}]&#39;</span>
+<p>5.Let's use a script to build our systems. Create a file called CreateSystems.sh. Copy the items from your scratch pad and replace them in the file you just created.</p>
+<div class="codehilite"><pre><span></span><span class="err">#!/bin/bash</span>
+
+<span class="err">##</span> <span class="err">update</span> <span class="err">with</span> <span class="err">your</span> <span class="err">subnet</span>
+<span class="err">SUBNET=</span><span class="s2">&quot;subnet-xxxx&quot;</span>
+<span class="err">##</span> <span class="err">update</span> <span class="err">with</span> <span class="err">your</span> <span class="err">security</span> <span class="err">group</span>
+<span class="err">SECGROUP=</span><span class="s2">&quot;sg-xxxx&quot;</span>
+<span class="err">##</span> <span class="err">update</span> <span class="err">with</span> <span class="err">your</span> <span class="err">own</span> <span class="err">key</span>
+<span class="err">MYKEYPAIR=</span><span class="s2">&quot;MyKeyPairxxxx&quot;</span>
+<span class="err">##update</span> <span class="err">with</span> <span class="err">your</span> <span class="err">region</span>
+<span class="err">REGION=</span><span class="s2">&quot;us-east-1&quot;</span>
+
+<span class="err">#---no</span> <span class="err">need</span> <span class="err">to</span> <span class="err">modify</span> <span class="err">below----</span>
+<span class="err">##</span> <span class="err">Create</span> <span class="err">the</span> <span class="err">Production</span> <span class="err">Ec</span><span class="mi">2</span><span class="err">Instance</span>
+<span class="err">aws</span> <span class="err">ec</span><span class="mi">2</span> <span class="err">run-instances</span> <span class="err">--iam-instance-profile</span> <span class="err">Name=SSMLabProfile</span> <span class="err">--image-id</span> <span class="err">ami</span><span class="mi">-00</span><span class="mf">80e4</span><span class="err">c</span><span class="mi">5</span><span class="err">bc</span><span class="mi">078760</span><span class="err">e</span> <span class="err">--instance-type</span> <span class="err">t</span><span class="mi">1</span><span class="err">.micro</span> <span class="err">--subnet-id</span> <span class="s2">&quot;${SUBNET}&quot;</span> <span class="err">--security-group-ids</span> <span class="s2">&quot;${SECGROUP}&quot;</span> <span class="err">--associate-public-ip-address</span> <span class="err">--tag-specifications</span> <span class="err">&#39;ResourceType=instance,Tags=</span><span class="p">[{</span><span class="err">Key=</span><span class="nt">&quot;Name&quot;</span><span class="p">,</span><span class="err">Value=</span><span class="nt">&quot;ProdEC2Instance&quot;</span><span class="p">},{</span><span class="err">Key=</span><span class="nt">&quot;Environment&quot;</span><span class="p">,</span><span class="err">Value=</span><span class="nt">&quot;Prod&quot;</span><span class="p">}]</span><span class="err">&#39;</span> <span class="err">--region</span> <span class="s2">&quot;${REGION}&quot;</span>
+
+<span class="err">##</span> <span class="err">Create</span> <span class="err">the</span> <span class="err">Development</span> <span class="err">Ec</span><span class="mi">2</span><span class="err">Instance</span>
+<span class="err">aws</span> <span class="err">ec</span><span class="mi">2</span> <span class="err">run-instances</span> <span class="err">--iam-instance-profile</span> <span class="err">Name=SSMLabProfile</span> <span class="err">--image-id</span> <span class="err">ami</span><span class="mi">-00</span><span class="mf">80e4</span><span class="err">c</span><span class="mi">5</span><span class="err">bc</span><span class="mi">078760</span><span class="err">e</span> <span class="err">--instance-type</span> <span class="err">t</span><span class="mi">1</span><span class="err">.micro</span> <span class="err">--subnet-id</span> <span class="s2">&quot;${SUBNET}&quot;</span> <span class="err">--security-group-ids</span> <span class="s2">&quot;${SECGROUP}&quot;</span> <span class="err">--associate-public-ip-address</span> <span class="err">--tag-specifications</span> <span class="err">&#39;ResourceType=instance,Tags=</span><span class="p">[{</span><span class="err">Key=</span><span class="nt">&quot;Name&quot;</span><span class="p">,</span><span class="err">Value=</span><span class="nt">&quot;DevEC2Instance&quot;</span><span class="p">},{</span><span class="err">Key=</span><span class="nt">&quot;Environment&quot;</span><span class="p">,</span><span class="err">Value=</span><span class="nt">&quot;Dev&quot;</span><span class="p">}]</span><span class="err">&#39;</span> <span class="err">--region</span> <span class="s2">&quot;${REGION}&quot;</span>
+
+<span class="err">##</span> <span class="err">Create</span> <span class="err">the</span> <span class="err">Production</span> <span class="err">on-premises</span> <span class="err">system</span>
+<span class="err">aws</span> <span class="err">ec</span><span class="mi">2</span> <span class="err">run-instances</span> <span class="err">--image-id</span> <span class="err">ami</span><span class="mi">-00</span><span class="mf">80e4</span><span class="err">c</span><span class="mi">5</span><span class="err">bc</span><span class="mi">078760</span><span class="err">e</span> <span class="err">--instance-type</span> <span class="err">t</span><span class="mi">1</span><span class="err">.micro</span> <span class="err">--subnet-id</span> <span class="s2">&quot;${SUBNET}&quot;</span> <span class="err">--security-group-ids</span> <span class="s2">&quot;${SECGROUP}&quot;</span> <span class="err">--associate-public-ip-address</span> <span class="err">--key-name</span> <span class="s2">&quot;${MYKEYPAIR}&quot;</span> <span class="err">--tag-specifications</span> <span class="err">&#39;ResourceType=instance,Tags=</span><span class="p">[{</span><span class="err">Key=</span><span class="nt">&quot;Name&quot;</span><span class="p">,</span><span class="err">Value=</span><span class="nt">&quot;ProdOnPrem&quot;</span><span class="p">},{</span><span class="err">Key=</span><span class="nt">&quot;Environment&quot;</span><span class="p">,</span><span class="err">Value=</span><span class="nt">&quot;Prod&quot;</span><span class="p">}]</span><span class="err">&#39;</span> <span class="err">--region</span> <span class="s2">&quot;${REGION}&quot;</span>
+
+<span class="err">##</span> <span class="err">Create</span> <span class="err">the</span> <span class="err">Development</span> <span class="err">on-premises</span> <span class="err">system</span>
+<span class="err">aws</span> <span class="err">ec</span><span class="mi">2</span> <span class="err">run-instances</span> <span class="err">--image-id</span> <span class="err">ami</span><span class="mi">-00</span><span class="mf">80e4</span><span class="err">c</span><span class="mi">5</span><span class="err">bc</span><span class="mi">078760</span><span class="err">e</span> <span class="err">--instance-type</span> <span class="err">t</span><span class="mi">1</span><span class="err">.micro</span> <span class="err">--subnet-id</span> <span class="s2">&quot;${SUBNET}&quot;</span> <span class="err">--security-group-ids</span> <span class="s2">&quot;${SECGROUP}&quot;</span> <span class="err">--associate-public-ip-address</span> <span class="err">--key-name</span> <span class="s2">&quot;${MYKEYPAIR}&quot;</span> <span class="err">--tag-specifications</span> <span class="err">&#39;ResourceType=instance,Tags=</span><span class="p">[{</span><span class="err">Key=</span><span class="nt">&quot;Name&quot;</span><span class="p">,</span><span class="err">Value=</span><span class="nt">&quot;DevOnPrem&quot;</span><span class="p">},{</span><span class="err">Key=</span><span class="nt">&quot;Environment&quot;</span><span class="p">,</span><span class="err">Value=</span><span class="nt">&quot;Dev&quot;</span><span class="p">}]</span><span class="err">&#39;</span> <span class="err">--region</span> <span class="s2">&quot;${REGION}&quot;</span>
 </pre></div>
 
 
-<p>4.Build the development instance using the following cli command:  </p>
-<blockquote>
-<p><strong>Note:</strong> Replace "subnet-xx" with the PublicSubnet1 ID and replace "sg-xx" with the InstanceSecurityGroup ID from your scratch pad.</p>
-</blockquote>
-<div class="codehilite"><pre><span></span>aws ec2 run-instances --iam-instance-profile <span class="nv">Name</span><span class="o">=</span>SSMLabProfile --image-id ami-0080e4c5bc078760e --instance-type t1.micro --subnet-id <span class="s2">&quot;subnet-xx&quot;</span> --security-group-ids <span class="s2">&quot;sg-xx&quot;</span> --region us-east-1 --tag-specifications <span class="s1">&#39;ResourceType=instance,Tags=[{Key=&quot;Name&quot;,Value=&quot;DevEC2Instance&quot;},{Key=&quot;Environment&quot;,Value=&quot;Dev&quot;}]&#39;</span>
+<p>6.Change the permissions on your scripts so that only you as the owner can execute it.</p>
+<div class="codehilite"><pre><span></span>chmod <span class="m">0755</span> CreateSystems.sh
 </pre></div>
 
 
-<p>5.Build a MOCK production on-premises instance using the following cli command:</p>
-<blockquote>
-<p><strong>IMPORTANT:</strong> We are not assigning an Instance Profile as these instances will mock our on-premises servers.</p>
-<p><strong>Note:</strong> Replace "subnet-xx" with the PublicSubnet1 ID, "sg-xx" with the InstanceSecurityGroup ID and "keyname-xx" with the key pair name from your scratch pad.</p>
-</blockquote>
-<div class="codehilite"><pre><span></span>aws ec2 run-instances --image-id ami-0080e4c5bc078760e --instance-type t1.micro --subnet-id <span class="s2">&quot;subnet-xx&quot;</span> --security-group-ids <span class="s2">&quot;sg-xx&quot;</span> --region us-east-1 --key-name <span class="s2">&quot;keyname-xx&quot;</span> --tag-specifications <span class="s1">&#39;ResourceType=instance,Tags=[{Key=&quot;Name&quot;,Value=&quot;ProdOnPrem&quot;},{Key=&quot;Environment&quot;,Value=&quot;Prod&quot;}]&#39;</span>
+<p>7.Execute the script.</p>
+<div class="codehilite"><pre><span></span>./CreateSystems.sh
 </pre></div>
 
 
-<p>6.Build the MOCK on-premises development instance using the following cli command:</p>
+<p>8.Let's confirm that we have 4 new systems running. Go to <a href="https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#Home:" target="_blank">EC2 Console</a>
+Click on <strong>Running Systems</strong> you will see a list of systems. Click on each of the new systems. Notice that ProdEC2Instance and DevEC2Instance do not have Key pair names associated as we built them without a key pair and will be using Session Manager to access them. We will use the key pair only for the OnPrem systems as we need to install the SSM Agent.</p>
+<ul>
+<li>ProdEC2Instance</li>
+<li>DevEC2Instance</li>
+<li>ProdOnPrem</li>
+<li>DevOnPrem</li>
+</ul>
+<p>9.For each instance find the <strong>private IPv4 address</strong> and copy it to your scratchpad. To find the private IPv4 address from the Amazon EC2 console check the box next to the instance, a menu with details including the Private IPs will show on the bottom of the screen, copy the Private IP address associated to that instance to your scratchpad. Do this for all 4 new systems.</p>
+<p>Your scratchpad should be similar to the following:</p>
 <blockquote>
-<p><strong>IMPORTANT:</strong> We are not assigning an Instance Profile as these instances will mock our hybrid servers. <strong>Please use your own key-pair</strong>.</p>
-<p><strong>Note:</strong> Replace "subnet-xx" with the PublicSubnet1 ID, "sg-xx" with the InstanceSecurityGroup ID and "keyname-xx" with the key pair name from your scratch pad.</p>
+<ul>
+<li>ProdEC2Instance 172.20.1.x</li>
+<li>DevEC2Instance 172.20.1.x</li>
+<li>ProdOnPrem 172.20.1.x</li>
+<li>DevOnPrem 172.20.1.x</li>
+</ul>
 </blockquote>
-<div class="codehilite"><pre><span></span>aws ec2 run-instances --image-id ami-0080e4c5bc078760e --instance-type t1.micro --subnet-id <span class="s2">&quot;subnet-xx&quot;</span> --security-group-ids <span class="s2">&quot;sg-xx&quot;</span> --region us-east-1 --key-name <span class="s2">&quot;keyname-xx&quot;</span> --tag-specifications <span class="s1">&#39;ResourceType=instance,Tags=[{Key=&quot;Name&quot;,Value=&quot;DevOnPrem&quot;},{Key=&quot;Environment&quot;,Value=&quot;Dev&quot;}]&#39;</span>
+<p>10.Update the inbound rules for the Cloud9 Security Group to only allow SSH from the VPC Subnet <strong>172.20.0.0/16.</strong> From the <a href="https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#Home:" target="_blank">EC2 Console</a> scroll down to <strong>NETWORK &amp; SECURITY</strong>, click on <strong>Security Groups</strong>, click the box next to the Security Group that starts with <strong>"aws-cloud9-mod-"</strong>, go to the <strong>inbound tab</strong> and click edit. Click <strong>Add Rule</strong>, Under Type select <strong>SSH</strong>, for the Source use <strong>172.20.0.0/16</strong> and add "VPC" in the description.</p>
+<p>The updated inbound rules for the Security Group should look like this:
+<img alt="Security Group" src="../images/SG-update.png" /></p>
+<details class="info"><summary>The public address ranges already in the Security Group are the public addresses for the Cloud9 Service for the us-east-1 region, for more <a href="https://docs.aws.amazon.com/cloud9/latest/user-guide/ip-ranges.html" target="_blank">information</a>.</summary></details>
+<p>11.From your Cloud9 instance ssh to the DevOnPrem instance. You specify the path and file name of the private key (.pem), the user name for your AMI, and the private ip address for the instance.</p>
+<blockquote>
+<p>Note: Replace MyKeyPair.pem with the name of the key-pair you created, this should be in your scratch pad. And replace 172.20.x.x with the Private IP associated with the DevOnPrem instance.</p>
+</blockquote>
+<div class="codehilite"><pre><span></span>ssh -i MyKeyPair.pem ec2-user@172.20.x.x
 </pre></div>
 
 
-<p>8.From your Cloud9 instance use the ssh command to connect to DevOnPrem instance. You specify the path and file name of the private key (.pem), the user name for your AMI, and the private ip address for the instance. Additionally, you will need the private IPv4 address for your instance using the Amazon EC2 console. From the Amazon EC2 console check the box next to the DevOnPrem instance, a menu with details including the Private IPs will show on the bottom of the screen, copy the Private IP address associated to your DevOnPrem instance and use it below.</p>
+<p>12.Then run the following commands to install SSM.</p>
 <blockquote>
-<p>Note: Replace my-key-pair.pem with the name of the key-pair you created, this should be in your scratch pad. And replace 172.16.x.x with the Private IP associated with the DevOnPrem instance.</p>
-</blockquote>
-<div class="codehilite"><pre><span></span>ssh -i /path/my-key-pair.pem ec2-user@172.16.x.x
-</pre></div>
-
-
-<ol>
-<li>Then run the following commands to install SSM.<blockquote>
 <p>Note: Replace "activation-code" and "activation-id" for the DevOnPrem instance with the code and id on your scratch pad.</p>
 </blockquote>
-</li>
-</ol>
 <div class="codehilite"><pre><span></span>sudo yum update -Y
 mkdir /tmp/ssm
 curl https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm -o /tmp/ssm/amazon-ssm-agent.rpm
@@ -856,7 +914,7 @@ sudo start amazon-ssm-agent
 </pre></div>
 
 
-<p>10.From your Cloud9 instance use the ssh command to connect to ProdOnPrem instance. You specify the path and file name of the private key (.pem), the user name for your AMI, and the private ip address for the instance. Additionally, you will need the private IPv4 address for your instance using the Amazon EC2 console. From the Amazon EC2 console check the box next to the ProdOnPrem instance, a menu with details including the Private IPs will show on the bottom of the screen, copy the Private IP address associated to your OnPrem instance and use it below.</p>
+<p>13.From your Cloud9 instance use the ssh command to connect to ProdOnPrem instance. You specify the path and file name of the private key (.pem), the user name for your AMI, and the private ip address for the instance. Additionally, you will need the private IPv4 address for your instance using the Amazon EC2 console. From the Amazon EC2 console check the box next to the ProdOnPrem instance, a menu with details including the Private IPs will show on the bottom of the screen, copy the Private IP address associated to your OnPrem instance and use it below.</p>
 <blockquote>
 <p>Note: Replace my-key-pair.pem with the name of the key-pair you created, this should be in your scratch pad. And replace 172.16.x.x with the Private IP associated with the ProdOnPrem instance.</p>
 </blockquote>
@@ -887,16 +945,17 @@ sudo start amazon-ssm-agent
 <p>DON’T Forget the last command above, this command start the ssm agent after activation <em>- sudo start amazon-ssm-agent</em></p>
 </div>
 <h3 id="task-3-configure-systems-manager-to-enable-management-of-on-premises-systems">Task 3: Configure Systems Manager to enable management of on-premises systems</h3>
-<p>In order to use Session Manager to connect to on-premisess systems SSM needs to be configured for advanced-instances tier. To enable the advanced-instances tier:</p>
+<p>In order to use Session Manager to connect to on-premises systems SSM needs to be configured for advanced-instances tier. To enable the advanced-instances tier:</p>
 <p>1.Open the <strong>AWS Systems Manager</strong> console</p>
 <p>2.In the navigation pane, choose <em>managed instances</em>.</p>
 <p>3.Choose the <strong>Settings</strong> tab.</p>
 <p>4.Choose <strong>Change account setting</strong>.</p>
-<p>5.Review the information in the pop-up about changing account settings, and then, if you approve, choose the option to accept and click <strong>Change setting</strong>. <strong>NOTE:</strong> The system can take several minutes to complete the process of moving all instances from the standard-instances tier to the advanced-instances tier.</p>
+<p>5.Review the information in the pop-up about changing account settings, and then, if you approve, choose the option to accept and click <strong>Change account setting</strong>.</p>
+<details class="info"><summary>The system can take several minutes to complete the process of moving all instances from the standard-instances tier to the advanced-instances tier."</summary></details>
 <p>6.Select <em>managed instances</em> You should now see a new <em>Advanced Instances</em> label next to the <em>managed instances</em> Heading and you can now manage on-premises systems.</p>
 <h3 id="task-4-create-iam-users-and-policy-restrictions-based-on-tags">Task 4: Create IAM users and policy restrictions based on tags</h3>
-<p><strong>NOTE:</strong> The following steps require full access to IAM.</p>
-<p>1.If you started this lab using Cloud9, c0ontinue to run the following commands from your Cloud9 session, use the create-user command to create the user.</p>
+<details class="info"><summary>The following steps require full access to IAM.</summary></details>
+<p>1.If you started this lab using Cloud9, continue to run the following commands from your Cloud9 session, use the create-user command to create the user.</p>
 <div class="codehilite"><pre><span></span>aws iam create-user --user-name MyWorkshopUser
 </pre></div>
 
@@ -906,7 +965,7 @@ sudo start amazon-ssm-agent
 </pre></div>
 
 
-<p>3.Now we will create and attach an IAM Custom Policy to MyWorkshopUser. Create a new file with the following contents, save the file name: SSMDevAccess.json</p>
+<p>3.Now we will create and attach an IAM Custom Policy to MyWorkshopUser. Create a new file with the following contents, save the file name: <strong>SSMDevAccess.json</strong></p>
 <blockquote>
 <p>This file must reside in the same directory where your CLI session is running, or you must specify the location.</p>
 </blockquote>
@@ -982,18 +1041,18 @@ sudo start amazon-ssm-agent
 
 
 <p>5.Copy the Account ID to your scratch pad, you will need it for the next instruction. You can find the AWS Account ID located in an IAM policy ARN, between "iam" and "policy", do not include the : symbols i.e. the AWS Account ID is 123456789012 given the following ARN "Arn": <code>arn:aws:iam::123456789012:policy/SSMDevAccess</code>.</p>
-<p>6.To attach the policy, use the attach-user-policy command, and reference the environment variable that holds the policy ARN.</p>
+<p>6.To attach the policy, use the attach-user-policy command, replace the Account ID in the policy-arn below with the Account ID in your scratchpad.</p>
 <div class="codehilite"><pre><span></span>aws iam attach-user-policy --user-name MyWorkshopUser --policy-arn arn:aws:iam::123456789012:policy/SSMDevAccess
 </pre></div>
 
 
-<p>7.Let's attach a policy that allows our workshop user to view the logs in CloudWatch.</p>
+<p>7.We also need to attach a policy that allows our workshop user to view the logs in CloudWatch.</p>
 <div class="codehilite"><pre><span></span>aws iam attach-user-policy --user-name MyWorkshopUser --policy-arn  arn:aws:iam::aws:policy/CloudWatchLogsReadOnlyAccess
 </pre></div>
 
 
 <p>8.Let's attach a policy that allows our workshop user to view the events in CloudTrail.</p>
-<div class="codehilite"><pre><span></span>aws iam attach-user-policy --user-name MyWorkshopUser --policy-arn arn:aws:iam::aws:policy/CloudWatchEventsReadOnlyAccess
+<div class="codehilite"><pre><span></span>aws iam attach-user-policy --user-name MyWorkshopUser --policy-arn arn:aws:iam::aws:policy/AWSCloudTrailReadOnlyAccess
 </pre></div>
 
 
@@ -1006,8 +1065,16 @@ sudo start amazon-ssm-agent
 <div class="codehilite"><pre><span></span>{
     &quot;AttachedPolicies&quot;: [
         {
+            &quot;PolicyName&quot;: &quot;CloudWatchLogsReadOnlyAccess&quot;,
+            &quot;PolicyArn&quot;: &quot;arn:aws:iam::aws:policy/CloudWatchLogsReadOnlyAccess&quot;
+        },
+        {
+            &quot;PolicyName&quot;: &quot;AWSCloudTrailReadOnlyAccess&quot;,
+            &quot;PolicyArn&quot;: &quot;arn:aws:iam::aws:policy/AWSCloudTrailReadOnlyAccess&quot;
+        },
+        {
             &quot;PolicyName&quot;: &quot;SSMDevAccess&quot;,
-            &quot;PolicyArn&quot;: &quot;arn:aws:iam::aws:policy/SSMDevAccess&quot;
+            &quot;PolicyArn&quot;: &quot;arn:aws:iam::123456789012:policy/SSMDevAccess&quot;
         }
     ]
 }
@@ -1024,7 +1091,7 @@ sudo start amazon-ssm-agent
 <li>Automatically initiate another action on an AWS resource as the result of session activity, such as running an AWS Lambda function, starting an AWS CodePipeline pipeline, or running an AWS Systems Manager Run Command document.</li>
 </ul>
 </blockquote>
-<p>We will log session data using Amazon CloudWatch Logs, archive session logs to Amazon S3 and generate access reports.</p>
+<p>We will log session data using Amazon CloudWatch Logs and generate access reports.</p>
 <ol>
 <li>
 <p>To setup Session Manager logging in Amazon CloudWatch Logs, open the <a href="https://console.aws.amazon.com/cloudwatch/" target="_blank">CloudWatch Console</a>. In the navigation pane, choose <strong>Logs</strong></p>
@@ -1050,10 +1117,10 @@ sudo start amazon-ssm-agent
 </blockquote>
 </li>
 <li>
-<p>Select the check box next to <strong>CloudWatch Logs</strong>.</p>
+<p>Select the check box next to <strong>CloudWatch Logs</strong> and uncheck <strong>Encrypt log data</strong>.</p>
 </li>
 <li>
-<p>Select <strong>Choose a log group name from the list</strong> specify the CloudWatch Logs group you  created <strong>SSM-Logs</strong> and select <strong>Save</strong>. Additionally, you can view ssm-agent logs on the instance here:</p>
+<p>Select <strong>Choose the log group name from the list</strong> specify the CloudWatch Logs group you  created <strong>SSM-Logs</strong> and select <strong>Save</strong>. Additionally, you can view ssm-agent logs on the instance here:</p>
 <blockquote>
 <ul>
 <li>/var/log/amazon/ssm/amazon-ssm-agent.log</li>
@@ -1063,9 +1130,11 @@ sudo start amazon-ssm-agent
 </li>
 </ol>
 <h3 id="task-6-confirm-appropriate-access-and-review-logs">Task 6: Confirm appropriate access and review logs</h3>
-<p>1.Logout of the AWS Management Console session or Open a different browser. Sign into the AWS account as <strong>MyWorkshopUser</strong> with the password you created earlier. Go to the <a href="https://console.aws.amazon.com/systems-manager/" target="_blank">AWS Systems Manager console</a>. In the navigation pane, choose <strong>Session Manager</strong></p>
-<p>2.Click <strong>Start session</strong>, select the <strong>ProdOnPrem</strong> name, click on <strong>start Session</strong> and a new session windows should open for you. This demonstrates that you can manage on-premises systems with Session Manager.</p>
-<p>3.In the Session Manager session type the following:</p>
+<p>1.Go to the <a href="https://console.aws.amazon.com/iam/home?#/home" target="_blank">IAM console</a>, copy the IAM users sign-in link, it should look similar to this:
+https://123456789012.signin.aws.amazon.com/console</p>
+<p>2.Open a new browser and paste in the IAM users sign-in link. Sign into the AWS account as <strong>MyWorkshopUser</strong> with the password you created earlier. Go to the <a href="https://console.aws.amazon.com/systems-manager/" target="_blank">AWS Systems Manager console</a>. In the navigation pane, choose <strong>Session Manager</strong></p>
+<p>3.Make sure you are in the us-east-1 region (N.Virginia). Click <strong>Start session</strong>, select the <strong>ProdOnPrem</strong> name, click on <strong>start Session</strong> and a new session windows should open for you. This demonstrates that you can manage on-premises systems with Session Manager.</p>
+<p>4.In the Session Manager session type the following:</p>
 <div class="codehilite"><pre><span></span>whoami
 </pre></div>
 
@@ -1073,19 +1142,19 @@ sudo start amazon-ssm-agent
 <p>The result should return the following:
 ssm-user</p>
 <p>3.Click Terminate to end.</p>
-<p>4.Repeat the steps above with the DevSSM instance. You should find the same results, the result should return the following:
+<p>4.Repeat the steps above with DevEC2Instance, you must click <strong>Start session</strong> to see the systems. You should find the same results, the result should return the following:
 ssm-user</p>
 <p>5.Click <strong>Terminate</strong> to end.</p>
-<p>6.Now try the ProdSSM instance, click start Session. The result should return the following:
+<p>6.Now try ProdEC2Instance, click start Session. The result should return the following:
 <img alt="Session Manager Access Denied" src="../images/Denied.png" /></p>
 <p>7.Go to the <strong>AWS Systems Manager</strong>, click on <strong>Session Manager</strong>, click on <strong>Session History</strong>. Your sessions should show up as Terminated or Terminating. Once the session has terminated you will see a link to <strong>CloudWatch Logs</strong>.
 <img alt="Session Manager Logs in CloudWatch Logs" src="../images/SSM-Cloudwatch.png" /></p>
-<p>Click on it to view the audit logs of your session. CloudWatch Logs will show details of the session such as commands that were run on the host. These logs can also be stored in S3 for you.
+<p>Click on it to view the audit logs of your session, select <strong>Text</strong> on the right side of the menu. CloudWatch Logs will show details of the session such as commands that were run on the host. These logs can also be stored in S3 for you.
 <img alt="Session Manager Logs in CloudWatch Logs" src="../images/CloudwatchLogs.png" /></p>
-<p>8.If you have CloudTrail enabled, you can view the Session Manager events in CloudTrail as well however you must be login as the administrator not MyWorkshopUser. Go to <strong>CloudTrail</strong> and find the Event name <strong>StartSession</strong> to view the details of your Session Manager session that CloudTrail captures. You Should see something like this:
-<img alt="Session Manager Logs in CloudTrail" src="../images/CloudTraillog-edited.png" /></p>
+<p>8.You can also view the Session Manager events in CloudTrail as well. Go to <strong>CloudTrail</strong> and find the Event name <strong>StartSession</strong> to view the details of your Session Manager session that CloudTrail captures. You Should see something like this:
+<img alt="Session Manager Logs in CloudTrail" src="../images/CloudTrail.png" /></p>
 <h2 id="troubleshooting">Troubleshooting</h2>
-<p>•   If your on-premisess instances are showing offline, make sure the ssm-agent was re-started after the SSM activation process.</p>
+<p>•   If your on-premises instances are showing offline, make sure the ssm-agent was re-started after the SSM activation process.</p>
                 
                   
                 

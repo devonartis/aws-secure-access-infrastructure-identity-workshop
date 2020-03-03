@@ -222,7 +222,7 @@
 
   
 
-<a href="https://github.com/aws-samples/aws-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -231,7 +231,7 @@
     </div>
   
   <div class="md-source__repository">
-    aws-samples/aws-infrastructure-identity-workshop
+    aws-samples/aws-secure-access-infrastructure-identity-workshop
   </div>
 </a>
             </div>
@@ -326,7 +326,7 @@
 
   
 
-<a href="https://github.com/aws-samples/aws-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -335,7 +335,7 @@
     </div>
   
   <div class="md-source__repository">
-    aws-samples/aws-infrastructure-identity-workshop
+    aws-samples/aws-secure-access-infrastructure-identity-workshop
   </div>
 </a>
     </div>
@@ -509,11 +509,11 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/aws-samples/aws-infrastructure-identity-workshop/edit/master/docs/01-environment-setup.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/edit/master/docs/01-environment-setup.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
                 <h1 id="module-1-setup-instructions">Module 1: Setup Instructions</h1>
-<p>In the first module you'll be running a CloudFormation template which will automate the creation of the environment and then you will manually configure the rest. AWS Cloud9 is a cloud-based integrated development environment (IDE) that lets you write, run, and debug your code with just a browser. It includes a code editor, debugger, and terminal. Cloud9 comes pre-packaged with essential tools for popular programming languages and the AWS Command Line Interface (CLI) pre-installed so you don’t need to install files or configure your laptop for this workshop.</p>
+<p>In the first module you'll be running a CloudFormation template which will build your Cloud9 environment and then you will manually configure the rest. AWS Cloud9 is a cloud-based integrated development environment (IDE) that lets you write, run, and debug your code with just a browser. It includes a code editor, debugger, and terminal. Cloud9 comes pre-packaged with essential tools for popular programming languages and the AWS Command Line Interface (CLI) pre-installed so you don’t need to install files or configure your laptop for this workshop.</p>
 <p>To setup your environment please expand one of the following drop-downs (depending on if you are doing this workshop at an <strong>AWS event</strong> or <strong>individually</strong>) and follow the instructions:</p>
 <details class="info"><summary>Click here if you are <em>using your own AWS account</em>. You will be using your computer to run the commands.</summary><ol>
 <li>Log in to your account however you would normally.<blockquote>
@@ -553,8 +553,8 @@
 <li>Finally, acknowledge that the template will create IAM resources with custom names under <strong>Capabilities</strong> and click <strong>Create stack</strong>.</li>
 <li>This will bring you back to the CloudFormation console. You can refresh the stack set to see the latest status. Before moving on, make sure the stack finally shows <strong>CREATE_COMPLETE</strong>.</li>
 <li>Navigate to the <a href="https://us-east-1.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console.</li>
-<li>Now you need to update the credentials in your Cloud9IDE to match the credentials you use on your laptop. 6. Type <code>aws configure --profile default</code> hit enter. Hit enter until you get to the choice <strong>Default region name</strong> and type in <code>us-east-1</code>. Hit enter and then enter again to leave this menu.</li>
-<li>Then copy your lapotps ~/.aws/credentials file to your Cloud9IDE session. The <code>~/.aws</code> directory named <code>credentials</code> and paste in the credentials from your laptop. You should end up with something that looks like this:<br>
+<li>Now you need to update the credentials in your Cloud9IDE to match the credentials you use on your laptop. Type <code>aws configure --profile default</code> hit enter. Hit enter until you get to the choice <strong>Default region name</strong> and type in <code>us-east-1</code>. Hit enter and then enter again to leave this menu.</li>
+<li>Copy your ~/.aws/credentials file from your laptop to your Cloud9IDE session or create new credentials for this lab with the appropriate permissions as referenced in the note under step 1. You should end up with something that looks like this:<br>
 [default]</br>
 AWS_ACCESS_KEY_ID=ASIA<strong><em>_</em></strong>_</br>
 AWS_SECRET_ACCESS_KEY=iZoD<strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong>__</br></li>
