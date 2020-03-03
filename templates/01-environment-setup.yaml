@@ -8,10 +8,11 @@ Resources:
   Cloud9Instance:
     Type: "AWS::Cloud9::EnvironmentEC2"
     Properties:
-      Description: "Cloud9 IDE for the SRV306 Serverless Authentication and Authorization Workshop at AWS Re:Invent 2018"
+      Description: "Cloud9 IDE for the Infrastructure Identity Workshop."
       AutomaticStopTimeMinutes: 60
       InstanceType: t2.micro
-      Name: !Sub ${AWS::StackName}-Cloud9Instance
+      Name: !Sub ${AWS::StackName}-environment
+      OwnerArn: !Sub "arn:aws:iam::${AWS::AccountId}:assumed-role/TeamRole/MasterKey"
       SubnetId: !Ref PublicSubnet1
     DependsOn: GatewayToInternet
 

@@ -1,68 +1,71 @@
 # Module 2: Session Manager ~ 30 minutes
 
-We were given the task to setup secure administrative access to our instances but we know that anytime someone logs into a server changes can be made and those changes could inadvertently affect the security of the host. Instead of hoping our system security doesn't change, let's change the access pattern and restrict all access into production systems. This approach to administrative access is called *Immutable Infrastructure*, which includes managing services and software deployments on IT resources wherein components are replaced rather than changed. An application or services is effectively redeployed each time any change occurs. Given this is a new access pattern for our team, we will continue to allow access to our development systems. Using Amazon Systems Manager Session Manager and AWS IAM with tag based permissions we will implement this exact scenario and review the audit logs.
+We were given the task to setup secure administrative access to our instances but we know that anytime someone logs into a server changes can be made and those changes could inadvertently affect the security of the host. Instead of hoping our system security doesn't change, let's change the access pattern and restrict all access into production systems. This approach to administrative access is called *Immutable Infrastructure*, which includes managing services and software deployments on IT resources wherein components are replaced rather than changed. An application or service is effectively redeployed each time changes are required. Given this is a new access pattern for our team, we will continue to allow access to our development systems. Using Amazon Systems Manager Session Manager and AWS IAM with tag based permissions we will implement this exact scenario and review the audit logs.
 
 In this Module we will create IAM roles with permissions to enable Session Manager access. Additionally, we are going to deploy 4 systems:
 
  * AWS EC2 Instance tagged with development
  * AWS EC2 Instance tagged with production
- * Mock on-premise system tagged with development
- * Mock on-premise system tagged with production
+ * Mock on-premises system tagged with development
+ * Mock on-premises system tagged with production
 
-Please note our mock on-premise systems will be EC2 instances, however we will treat them like on-premise systems by not assigning an Instance Profile.
+Please note our mock on-premises systems will be EC2 instances, however we will treat them like on-premises systems by not assigning an Instance Profile.
 
 !!! Terminology
-    A *managed instance* is any machine configured for AWS Systems Manager. You can configure Amazon EC2 instances or on-premises machines in a hybrid environment as a *managed instance*. Systems Manager supports various distributions of Linux, including Raspberry Pi devices, and Microsoft Windows Server. In the AWS Management Console, any machine prefixed with "mi-" is an on-premises server or virtual machine (VM) *managed instance*. AWS Systems Manager offers a standard-instances tier and an advanced-instances tier for servers and VMs in your hybrid environment. Advanced instances also enable you to connect to your hybrid machines by using AWS Systems Manager Session Manager. Session Manager provides interactive shell access to your instances. While this lab focuses on Session Manager which is a capability of AWS Systems Manager there are several other capabilities of AWS Systems Manager that you can take advantage of, more information about <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/features.html" target="_blank">System Manager Capabilities</a>
+    A *managed instance* is any machine configured for AWS Systems Manager. You can configure Amazon EC2 instances or on-premisess machines in a hybrid environment as a *managed instance*. Systems Manager supports various distributions of Linux, including Raspberry Pi devices, and Microsoft Windows Server. In the AWS Management Console, any machine prefixed with "mi-" is an on-premisess server or virtual machine (VM) *managed instance*. AWS Systems Manager offers a standard-instances tier and an advanced-instances tier for servers and VMs in your hybrid environment. Advanced instances also enable you to connect to your hybrid machines by using AWS Systems Manager Session Manager. Session Manager provides interactive shell access to your instances. While this lab focuses on Session Manager which is a capability of AWS Systems Manager there are several other capabilities of AWS Systems Manager that you can take advantage of, more information about <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/features.html" target="_blank">System Manager Capabilities</a>
 
 ## Tasks
 
 1. Create IAM roles and permissions to enable Session Manager
-2. Create instances and install the SSM Agent
-3. Configure Systems Manager and enable manage on-premise systems
-4. Create IAM users and policy restrictions based on tags
-5. Configure logging
-6. Confirm appropriate access and review logs
+2. Setup AWS Systems Manager to manage systems on-premises
+3. Create instances and install the SSM Agent
+4. Configure Systems Manager and enable management of on-premises systems
+5. Create IAM users and policy restrictions based on tags
+6. Configure logging
+7. Confirm appropriate access and review logs
 
 ### Task 1: Create IAM roles and permissions to enable Session Manager for Amazon EC2 Instances
 
-1.If you are at an AWS Event where we are using EventEngine, go to **Outputs** section from your CloudFormation deployment, click on the URL next to the **Cloud9IDE** key. Otherwise, if this is not an AWS Event and EventEngine is not used, you can run the following commands from your laptop.
+1. Navigate to the <a href="https://us-east-1.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console.
 
-2.Create an instance profile:
+2. On the left side of the Cloud9 Console is a menu, Click on **Account environments** and select **Open IDE** on the environment that has been deployed for you. Perform the following commands in the same terminal window that you setup your credentials.
+
+3. Create an instance profile:
 
 ```bash
 aws iam create-instance-profile --instance-profile-name SSMLabProfile
 ```
 
-3.Create the json trust policy doc to attach to the IAM role. Create a new file with the following contents, save the file name: **lab-role-trust-policy.json**:
+4. Create the json trust policy doc to attach to the IAM role. Create a new file with the following contents, save the file name: **lab-role-trust-policy.json**:
 ```json
-    {
-      "Version": "2012-10-17",
-      "Statement": {
-        "Effect": "Allow",
-        "Principal": {"Service": "ec2.amazonaws.com"},
-        "Action": "sts:AssumeRole"
-      }
-    }
+{
+  "Version": "2012-10-17",
+  "Statement": {
+    "Effect": "Allow",
+    "Principal": {"Service": "ec2.amazonaws.com"},
+    "Action": "sts:AssumeRole"
+  }
+}
 ```
 
-4.Create an IAM role using the trust policy above:
+5. Create an IAM role using the trust policy above:
 ```bash
 aws iam create-role --role-name SSMLabRole --assume-role-policy-document file://lab-role-trust-policy.json
 ```
 
-5.Add the role to the instance profile:
+6. Add the role to the instance profile:
 ```bash
 aws iam add-role-to-instance-profile --role-name SSMLabRole --instance-profile-name SSMLabProfile
 ```
 
-6.Attach the existing **EC2RoleSSMAccess** to the newly created instance-profile:
+7. Attach the existing **EC2RoleSSMAccess** to the newly created instance-profile:
 ```bash
 aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM --role-name SSMLabRole
 ```
 
-Attach the instance profile to the system.
+8. Attach the instance profile to the system.
 
-1.Create the json trust policy doc to attach to the IAM role. Create a new file with the following contents, save the file name: ssmservice-trust-policy.json
+9. Create the json trust policy doc to attach to the IAM role. Create a new file with the following contents, save the file name: ssmservice-trust-policy.json
 ```json
 {
   "Version": "2012-10-17",
@@ -74,23 +77,23 @@ Attach the instance profile to the system.
 }
 ```
 
-2.Create a new role named **SSMServiceRole**:
+10. Create a new role named **SSMServiceRole**:
 ```bash
 aws iam create-role --role-name SSMServiceRole --assume-role-policy-document file://ssmservice-trust-policy.json
 ```
 
-3.As a starting point, we will use AmazonSSMManagedInstanceCore grant permission for Systems Manager to interact with your instances. AmazonSSMManagedInstanceCore, enables an instance to use AWS Systems Manager service core functionality. Depending on your operations plan, you might need permissions represented in one or more of the other three policies. To view this policy in the console go to services, IAM, Access Management, Policies and search for the **AmazonSSMManagedInstanceCore** policy, click on the policy, view the permissions by clicking on the permissions tab. Now attach this policy to the role using attach-role-policy command.
+11. As a starting point, we will use AmazonSSMManagedInstanceCore grant permission for Systems Manager to interact with your instances. AmazonSSMManagedInstanceCore, enables an instance to use AWS Systems Manager service core functionality. Depending on your operations plan, you might need permissions represented in one or more of the other three policies. To view this policy in the console go to services, IAM, Access Management, Policies and search for the **AmazonSSMManagedInstanceCore** policy, click on the policy, view the permissions by clicking on the permissions tab. Now attach this policy to the role using attach-role-policy command.
 
 ```bash
 aws iam attach-role-policy --role-name SSMServiceRole --policy-arn arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
 ```
 
-4.Let's make sure we allow our on-premise systems to write to CloudWatchLogs so that we can use the same Audit and Logging tools to review administrative access. We'll use the same Attach-role-policy to attach a policy that enables the SSMServiceRole to write to CloudWatchLogs.
+12. Let's make sure we allow our on-premises systems to write to CloudWatchLogs so that we can use the same Audit and Logging tools to review administrative access. We'll use the same Attach-role-policy to attach a policy that enables the SSMServiceRole to write to CloudWatchLogs.
 ```bash
 aws iam attach-role-policy --role-name SSMServiceRole --policy-arn arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
 ```
 
-Enable Session Manager to manage systems on-premise:
+### Task 2: Configure Session Manager to manage systems on-premises
 
 The activation process provides an Activation Code and ID which functions like an access key ID and secret key to provide secure access to the Systems Manager service form your *managed instances*.
 
@@ -107,18 +110,18 @@ aws ssm create-activation --default-instance-name DevOnPrem --iam-role SSMServic
 aws ssm create-activation --default-instance-name ProdOnPrem --iam-role SSMServiceRole --registration-limit 10 --region us-east-1
 ```
 
-**Store the managed-instance Activation Code and Activation ID in a safe place.** You specify this Code and ID when you install SSM Agent on systems on-premise. The code and ID combination functions like an Amazon EC2 access key ID and secret key to provide secure access to the Systems Manager service from your *managed instances*.
+**Store the managed-instance Activation Code and Activation ID in a safe place.** You specify this Code and ID when you install SSM Agent on systems on-premises. The code and ID combination functions like an Amazon EC2 access key ID and secret key to provide secure access to the Systems Manager service from your *managed instances*.
 
->If you lose the Code and ID, you must create a new activation. An activation expiration is a window of time when you can register on-premises machines with Systems Manager, default is 24 hours. An expired activation has no impact on your servers or virtual machines (VMs) that you registered with Systems Manager. This means that if an activation expires then you can’t register more servers or VMs with Systems Manager by using that specific activation. You simply need to create a new one. All of the servers and VMs that you registered will continue to be registered Systems Manager *managed instances* until you remove or disable SSM Agent on the server or VM and thereby unregister it. <a href="https://docs.aws.amazon.com/cli/latest/reference/ssm/create-activation.html" target="_blank">For more details:</a>
+>If you lose the Code and ID, you must create a new activation. An activation expiration is a window of time when you can register on-premisess machines with Systems Manager, default is 24 hours. An expired activation has no impact on your servers or virtual machines (VMs) that you registered with Systems Manager. This means that if an activation expires then you can’t register more servers or VMs with Systems Manager by using that specific activation. You simply need to create a new one. All of the servers and VMs that you registered will continue to be registered Systems Manager *managed instances* until you remove or disable SSM Agent on the server or VM and thereby unregister it. <a href="https://docs.aws.amazon.com/cli/latest/reference/ssm/create-activation.html" target="_blank">For more details:</a>
 
 ### Task 2: Create instances and install the SSM Agent
 
-Please note that in order to create a mock on-premise system we will be creating and using a key-pair and not using them for the AWS EC2 instances. We do not need a key pair for the AWS EC2 instances because we are using Session Manager to gain direct access.
+Please note that in order to create a mock on-premises system we will be creating and using a key-pair and not using them for the AWS EC2 instances. We do not need a key pair for the AWS EC2 instances because we are using Session Manager to gain direct access.
 
 !!! Attention
     If you are using Cloud9, please perform the following on the Cloud9 instance.
 
-1. Create a key pair for SSH access to the on-premise systems. Follow the instructions for **Creating a Key Pair Using Amazon EC2**<a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair"_blank"> here.</a> Copy the name of your key pair to your scratch pad.
+1. Create a key pair for SSH access to the on-premises systems. Follow the instructions for **Creating a Key Pair Using Amazon EC2**<a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair"_blank"> here.</a> Copy the name of your key pair to your scratch pad.
 
 !!! info
     What is a Key Pair?
@@ -147,8 +150,8 @@ aws ec2 run-instances --iam-instance-profile Name=SSMLabProfile --image-id ami-0
 aws ec2 run-instances --iam-instance-profile Name=SSMLabProfile --image-id ami-0080e4c5bc078760e --instance-type t1.micro --subnet-id "subnet-xx" --security-group-ids "sg-xx" --region us-east-1 --tag-specifications 'ResourceType=instance,Tags=[{Key="Name",Value="DevEC2Instance"},{Key="Environment",Value="Dev"}]'
 ```
 
-5.Build a MOCK production on-premise instance using the following cli command:
->**IMPORTANT:** We are not assigning an Instance Profile as these instances will mock our on-premise servers.
+5.Build a MOCK production on-premises instance using the following cli command:
+>**IMPORTANT:** We are not assigning an Instance Profile as these instances will mock our on-premises servers.
 
 >**Note:** Replace "subnet-xx" with the PublicSubnet1 ID, "sg-xx" with the InstanceSecurityGroup ID and "keyname-xx" with the key pair name from your scratch pad.
 
@@ -156,7 +159,7 @@ aws ec2 run-instances --iam-instance-profile Name=SSMLabProfile --image-id ami-0
 aws ec2 run-instances --image-id ami-0080e4c5bc078760e --instance-type t1.micro --subnet-id "subnet-xx" --security-group-ids "sg-xx" --region us-east-1 --key-name "keyname-xx" --tag-specifications 'ResourceType=instance,Tags=[{Key="Name",Value="ProdOnPrem"},{Key="Environment",Value="Prod"}]'
 ```
 
-6.Build the MOCK on-premise development instance using the following cli command:
+6.Build the MOCK on-premises development instance using the following cli command:
 >**IMPORTANT:** We are not assigning an Instance Profile as these instances will mock our hybrid servers. **Please use your own key-pair**.
 
 >**Note:** Replace "subnet-xx" with the PublicSubnet1 ID, "sg-xx" with the InstanceSecurityGroup ID and "keyname-xx" with the key pair name from your scratch pad.
@@ -208,9 +211,9 @@ exit
 !!! Attention
     DON’T Forget the last command above, this command start the ssm agent after activation *- sudo start amazon-ssm-agent*
 
-### Task 3: Configure Systems Manager to enable management of on-premise systems
+### Task 3: Configure Systems Manager to enable management of on-premises systems
 
-In order to use Session Manager to connect to on-premises systems SSM needs to be configured for advanced-instances tier. To enable the advanced-instances tier:
+In order to use Session Manager to connect to on-premisess systems SSM needs to be configured for advanced-instances tier. To enable the advanced-instances tier:
 
 1.Open the **AWS Systems Manager** console
 
@@ -222,7 +225,7 @@ In order to use Session Manager to connect to on-premises systems SSM needs to b
 
 5.Review the information in the pop-up about changing account settings, and then, if you approve, choose the option to accept and click **Change setting**. **NOTE:** The system can take several minutes to complete the process of moving all instances from the standard-instances tier to the advanced-instances tier.
 
-6.Select *managed instances* You should now see a new *Advanced Instances* label next to the *managed instances* Heading and you can now manage on-premise systems.
+6.Select *managed instances* You should now see a new *Advanced Instances* label next to the *managed instances* Heading and you can now manage on-premises systems.
 
 ### Task 4: Create IAM users and policy restrictions based on tags
 **NOTE:** The following steps require full access to IAM.
@@ -379,7 +382,7 @@ We will log session data using Amazon CloudWatch Logs, archive session logs to A
 
 1.Logout of the AWS Management Console session or Open a different browser. Sign into the AWS account as **MyWorkshopUser** with the password you created earlier. Go to the <a href="https://console.aws.amazon.com/systems-manager/" target="_blank">AWS Systems Manager console</a>. In the navigation pane, choose **Session Manager**
 
-2.Click **Start session**, select the **ProdOnPrem** name, click on **start Session** and a new session windows should open for you. This demonstrates that you can manage on-premise systems with Session Manager.
+2.Click **Start session**, select the **ProdOnPrem** name, click on **start Session** and a new session windows should open for you. This demonstrates that you can manage on-premises systems with Session Manager.
 
 3.In the Session Manager session type the following:
 ```bash
@@ -410,4 +413,4 @@ Click on it to view the audit logs of your session. CloudWatch Logs will show de
 
 ## Troubleshooting
 
-•	If your on-premises instances are showing offline, make sure the ssm-agent was re-started after the SSM activation process.
+•	If your on-premisess instances are showing offline, make sure the ssm-agent was re-started after the SSM activation process.
