@@ -13,7 +13,7 @@ This workshop is designed to help you get familiar with AWS Security services an
 
 ## Scenario
 
-Your company is new to the cloud and has deployed their first set of development and productions systems in AWS, additionally you still have hosts to manage in your data center.  You are a systems administrator and have been tasked with setting up secure administrative access to your systems in AWS and on-premises.  As part of that configuration you are also responsible for confirming that you can audit administrative activities. Security has found that ssh keys are not properly secured and is asking for a better solution that includes EC2 Instances in AWS and on-premises systems. Your security team has asked if there is way to centrally manage administrative access to systems and have full audit capabilities.
+Your company is new to the cloud and has deployed their first set of development and productions systems in AWS, additionally you still have hosts to manage in your data center.  You are a systems administrator and have been tasked with setting up secure administrative access to your systems in AWS and on-premises.  As part of that configuration you are also responsible for confirming that you can audit administrative activities. Security has found that ssh keys are not properly secured and has asked for a better solution that includes EC2 Instances in AWS and on-premises systems. Your security team has asked if there is way to centrally manage administrative access to systems and have full audit capabilities.
 
 ## Architecture
 

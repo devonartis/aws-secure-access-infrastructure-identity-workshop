@@ -7,8 +7,8 @@ site_author: 'aws-security-workshops@amazon.com'
 site_url: 'https://infrastructure-identity.awssecworkshops.com/'
 
 # Repository
-repo_name: 'aws-samples/aws-infrastructure-identity-workshop'
-repo_url: 'https://github.com/aws-samples/aws-infrastructure-identity-workshop'
+repo_name: 'aws-samples/aws-secure-access-infrastructure-identity-workshop'
+repo_url: 'https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop'
 
 # Copyright
 copyright: '&copy; 2019, Amazon Web Services, Inc. or its affiliates. All rights reserved.'

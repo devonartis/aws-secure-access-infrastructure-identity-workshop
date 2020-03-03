@@ -6,41 +6,74 @@ When you connect to an instance using EC2 Instance Connect, the Instance Connect
 
 You can use Instance Connect to connect to your instances using any SSH client of your choice or the Instance Connect CLI, or you can connect to your instances by using the new browser-based SSH client in the Amazon EC2 console.
 
-<a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-connect-set-up.html" target="_blank">More Information and a list of currently supported Operating Systems</a>
+<a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-connect-set-up.html" target="_blank">Click here for more information and a list of currently supported Operating Systems</a>
 
-## Build an EC2 Instance and install the EC2 Instance Connect client.
-EC2 Instance connect is already installed on all version of Amazon Linux 2, however we will use Ubuntu Server and install the client so we can become familiar with the process.
+## Tasks
 
-1.This lab will be executed from your Cloud9IDE. Go to Outputs tab from your **InfrastructureIdentity-Env-Setup** CloudFormation stack, and click on the value next to Cloud9IDE. Make sure your credentials are still in place on the Cloud9IDE, for additional details follow quickly configuring the AWS CLI You may need to disable AWS managed temporary credentials in Cloud9 Preference, AWS Settings, Credentials.
+1. Build an EC2 Instance and install the EC2 Instance Connect client
+2. Create IAM permissions to enable EC2 Instance Connect
+3. Confirm Access
 
-2.Go back to **CloudFormation**, find the stack that starts with **aws-cloud9-**, click on **Resources** and take note Security Group ID (sg-abc123) for **InstanceSecurityGroup**. Next, find the CloudFormation Stack named **InfrastructureIdentity-Env-Setup**, click on **Resources** and take note of the subnet-id (subnet-abc123) for **PublicSubnet1**, you will use these in steps 3-6.
+### Task 1: Build an EC2 Instance and install the EC2 Instance Connect client
+EC2 Instance Connect is already installed on all versions of Amazon Linux 2, however we will use Ubuntu Server and install the client so we can become familiar with the process.
 
-3.Create a text file named connect-install.txt, using the following contents:
+1.Using the same Cloud9IDE tab. Make sure your credentials are still in place on the Cloud9IDE, for additional details follow quickly configuring the AWS CLI You may need to disable AWS managed temporary credentials in Cloud9 Preference, AWS Settings, Credentials.
+
+2.Create a text file named **connect-install.txt**, using the following contents:
 ```json
 #!/bin/bash
 apt-get update
 apt-get install ec2-instance-connect
 less /lib/systemd/system/ssh.service.d/ec2-instance-connect.conf
 ```
-4.The following command will build an Ubuntu instance with EC2-Instance-Connect installed using user-data, using the Security Group ID and Public Subnet created for us earlier, using the following cli command:
->Before you run the command below remove all quotes and replace "subnet-xx" and "sg-xx" with the information from the previous step and your SSH key.
-```bash
-aws ec2 run-instances --image-id ami-026c8acd92718196b --instance-type t1.micro --subnet-id subnet-xx --security-group-ids sg-xx --region us-east-1 --associate-public-ip-address --tag-specifications 'ResourceType=instance,Tags={Key="Name",Value="EC2ConnectInstance"}' --user-data file://connect-install.txt
-```
 
-5.You will see the output that includes details about the instance you just created. Take note of the instance-id as we will use it in the next section.
+3.We will use the same SUBNET, SECGROUP and MYKEYPAIR values from Module 2 to create an Ubuntu Ec2 Instance. Create a file called **CreateUbuntuSystem.sh**. Copy the items from your scratch pad and replace them in the file you just created.
+```bash
+#!/bin/bash
+
+## update with your subnet
+SUBNET="subnet-xxxx"
+## update with your security group
+SECGROUP="sg-xxxx"
+## update with your own key
+MYKEYPAIR="MyKeyPairxxxx"
+##update with your region
+REGION="us-east-1"
+
+#---no need to modify below----
+## Create the Ubuntu Instance
+aws ec2 run-instances --iam-instance-profile Name=SSMLabProfile --image-id ami-026c8acd92718196b --instance-type t1.micro --subnet-id "${SUBNET}" --security-group-ids "${SECGROUP}" --associate-public-ip-address --tag-specifications 'ResourceType=instance,Tags={Key="Name",Value="EC2ConnectInstance"}' --region "${REGION}" --user-data file://connect-install.txt
+```
+4.In order to connect using the browser based EC2 Instance Connect client we need to allow inbound SSH access. You can either using the public ip of your laptop or for the purposes of the lab we can use 0.0.0.0/Update the inbound rules of the Cloud9 Security Group to now allow SSH from the the Internet 0.0.0.0/. From the <a href="https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#Home:" target="_blank">EC2 Console</a> scroll down to **NETWORK & SECURITY**, click on **Security Groups**, click the box next to the Security Group that starts with **"aws-cloud9-mod-"**, go to the **inbound tab** and click edit. Click **Add Rule**, Under Type select **SSH**, for the Source use **0.0.0.0/0** and add "EC2 Instance Connect Browser Client" in the description.
+
+The updated inbound rules for the Security Group should look like this:
+![Security Group](./images/SG-connect-update.png)
+
+
+4.Change the permissions on your script so that only you as the owner can execute it.
+```bash
+chmod 0755 CreateUbuntuSystem.sh
+```
+5.Execute the script.
+```bash
+./CreateUbuntuSystem.sh
+```
+6.Let's confirm that we have a new system running. Go to <a href="https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#Home:" target="_blank">EC2 Console</a>
+Click on **Running Systems** you will see a list of systems. Click on the EC2ConnectInstance. Again notice that we do not have Key pair name associated as we built it without a key pair and will be using EC2 Instance Connect for access.
+
+ * EC2ConnectInstance
+
+
+7.From the previous output note the instance-id in your scratchpad, we will use it in the next section.
 ```json
     "InstanceId": "i-000abcdefghijklmn",
 ```
 
-6.Update the Cloud9 security group named **aws-cloud9-InfrastructureIdentity-Env-Setup-Cloud9Instance-** to allow inbound SSH from **0.0.0.0/0**.
+### Task 2: Create IAM permissions to enable EC2 Instance Connect
 
+1.We will create and attach an IAM Customer Managed Policy to MyWorkshopUser. Create a new file with the following contents but **Replace** the "i-xx" with the instance-id that you noted earlier, save the file name: **InstanceConnect.json**
 
-## IAM roles and permissions to enable EC2 Instance Connect
-
-1.Now we will create and attach an IAM Customer Managed Policy to MyWorkshopUser. Create a new file with the following contents but **Replace** the "i-xx" with the instance-id that you noted earlier, save the file name: InstanceConnect.json
-
->This file must reside in the same directory where your CLI session is running, or you must specify the location.
+>Update the **Account ID** and instance id (**i-xx**)from your scratchpad
 
 ```json
 {
@@ -48,13 +81,19 @@ aws ec2 run-instances --image-id ami-026c8acd92718196b --instance-type t1.micro 
 	"Statement": [{
 		"Effect": "Allow",
 		"Action": "ec2-instance-connect:SendSSHPublicKey",
-		"Resource": "arn:aws:ec2:region:account-id:instance/i-xx",
+		"Resource": "arn:aws:ec2:us-east-1:123456789012:instance/i-xx",
 		"Condition": {
 			"StringEquals": {
 				"ec2:osuser": "ubuntu"
 			}
-		}
-	}]
+      }
+		},
+    {
+        "Effect": "Allow",
+        "Action": "ec2:Describe*",
+        "Resource": "*"
+    }
+	]
 }
 ```
 >
@@ -82,17 +121,21 @@ The result should return the following:
     }
 }
 ```
-3. This above command will output a policy ARN for the policy we just created. Copy this ARN from the prior output and replace it in the next command.
+3.This above command will output a policy ARN for the policy we just created. **Copy** the ARN value from the output and replace it in the next command.
 
-3.To attach the policy, use the attach-user-policy command, and use the policy ARN output from above.
+4.To attach the policy, use the attach-user-policy command, and update the Account ID in the policy ARN below.
 ```bash
-aws iam attach-user-policy --user-name MyWorkshopUser --policy-arn arn:aws:iam::abc123:policy/InstanceConnect
+aws iam attach-user-policy --user-name MyWorkshopUser --policy-arn arn:aws:iam::abc123xxx:policy/InstanceConnect
 ```
 
-## Confirm Access
-1.Now using a different browser or sign out of the AWS Management Console and sign back in as MyWorkshopUser.
+### Task 3: Confirm Access
 
-2.Go to **EC2**, select **Instances**, select the **EC2ConnectInstance**. Select **Connect** and choose the option to **connect with EC2 Instance Connect (browser-based SSH connection)**. Update the user name to **ubuntu**. EC2 Instance Connect performs the following three actions in one call: it generates a one-time-use SSH public key, pushes the key to the instance where it remains for 60 seconds, and connects the user to the instance. You can use basic SSH/SFTP commands with the Instance Connect CLI.
+1.Go to the <a href="https://console.aws.amazon.com/iam/home?#/home" target="_blank">IAM console</a>, copy the IAM users sign-in link, it should look similar to this:
+https://123456789012.signin.aws.amazon.com/console
+
+2.Open a new browser and paste in the IAM users sign-in link. Sign into the AWS account as **MyWorkshopUser** with the password you created earlier. Go to the <a href="https://console.aws.amazon.com/systems-manager/" target="_blank">AWS Systems Manager console</a>. In the navigation pane, choose **Session Manager**
+
+3.Make sure you are in the **us-east-1(N.Virginia)** region . Go to **EC2**, select **Instances**, select the **EC2ConnectInstance**. Select **Connect** and choose the option to **connect with EC2 Instance Connect (browser-based SSH connection)**. Update the user name to **ubuntu**. EC2 Instance Connect performs the following three actions in one call: it generates a one-time-use SSH public key, pushes the key to the instance where it remains for 60 seconds, and connects the user to the instance. You can use basic SSH/SFTP commands with the Instance Connect CLI.
 
 3.You should see the EC2 Instance Connect (browser-based SSH connection) appear.
 

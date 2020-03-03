@@ -1,6 +1,6 @@
 # Module 1: Setup Instructions
 
-In the first module you'll be running a CloudFormation template which will automate the creation of the environment and then you will manually configure the rest. AWS Cloud9 is a cloud-based integrated development environment (IDE) that lets you write, run, and debug your code with just a browser. It includes a code editor, debugger, and terminal. Cloud9 comes pre-packaged with essential tools for popular programming languages and the AWS Command Line Interface (CLI) pre-installed so you don’t need to install files or configure your laptop for this workshop.
+In the first module you'll be running a CloudFormation template which will build your Cloud9 environment and then you will manually configure the rest. AWS Cloud9 is a cloud-based integrated development environment (IDE) that lets you write, run, and debug your code with just a browser. It includes a code editor, debugger, and terminal. Cloud9 comes pre-packaged with essential tools for popular programming languages and the AWS Command Line Interface (CLI) pre-installed so you don’t need to install files or configure your laptop for this workshop.
 
 
 To setup your environment please expand one of the following drop-downs (depending on if you are doing this workshop at an **AWS event** or **individually**) and follow the instructions:
@@ -31,8 +31,8 @@ To setup your environment please expand one of the following drop-downs (dependi
 	6. Finally, acknowledge that the template will create IAM resources with custom names under **Capabilities** and click **Create stack**.
 	7. This will bring you back to the CloudFormation console. You can refresh the stack set to see the latest status. Before moving on, make sure the stack finally shows **CREATE_COMPLETE**.
 	8. Navigate to the <a href="https://us-east-1.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console.
-	9. Now you need to update the credentials in your Cloud9IDE to match the credentials you use on your laptop. 6. Type `aws configure --profile default` hit enter. Hit enter until you get to the choice **Default region name** and type in `us-east-1`. Hit enter and then enter again to leave this menu.
-	10. Then copy your lapotps ~/.aws/credentials file to your Cloud9IDE session. The `~/.aws` directory named `credentials` and paste in the credentials from your laptop. You should end up with something that looks like this:<br>
+	9. Now you need to update the credentials in your Cloud9IDE to match the credentials you use on your laptop. Type `aws configure --profile default` hit enter. Hit enter until you get to the choice **Default region name** and type in `us-east-1`. Hit enter and then enter again to leave this menu.
+	10. Copy your ~/.aws/credentials file from your laptop to your Cloud9IDE session or create new credentials for this lab with the appropriate permissions as referenced in the note under step 1. You should end up with something that looks like this:<br>
 	[default]</br>
 	AWS_ACCESS_KEY_ID=ASIA________</br>
 	AWS_SECRET_ACCESS_KEY=iZoD_______________________</br>
