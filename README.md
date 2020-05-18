@@ -4,7 +4,7 @@ This hands-on workshop is where you will learn about a number of AWS services th
 
 ## Start the workshop:
 
-Visit the site to get started: [https://idm-infrastructure.awssecworkshops.com/](https://infrastructure.awssecworkshops.com/)
+Visit the site to get started: [https://idm-infrastructure.awssecworkshops.com/](https://idm-infrastructure.awssecworkshops.com/)
 
 ## License Summary
 
