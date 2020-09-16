@@ -11,7 +11,7 @@
         <meta name="description" content="This hands-on workshop is where you will learn about a number of AWS services that will enable you to securely administer your systems in AWS as we walk through real-world threat scenarios. Learn about the secure administration capabilities of AWS Session Manager, AWS Identity and Access Management and Amazon EC2 Instance Connect.">
       
       
-        <link rel="canonical" href="https://infrastructure-identity.awssecworkshops.com/license/">
+        <link rel="canonical" href="https://infrastructure-identity.awssecworkshops.com/01-environment-setup0/">
       
       
         <meta name="author" content="aws-security-workshops@amazon.com">
@@ -21,7 +21,7 @@
     
     
       
-        <title>License - Infrastructure Identity in AWS</title>
+        <title>Module 1: Setup Instructions - Infrastructure Identity in AWS</title>
       
     
     
@@ -56,6 +56,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#module-1-setup-instructions" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -79,7 +84,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              License
+              Module 1: Setup Instructions
             
           </span>
         </div>
@@ -248,18 +253,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-    
-    <a href="./" title="License" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../license/" title="License" class="md-nav__link">
       License
     </a>
-    
   </li>
 
     
@@ -270,12 +268,51 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-overview" class="md-nav__link">
+    Architecture Overview
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/edit/master/docs/license.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/aws-samples/aws-secure-access-infrastructure-identity-workshop/edit/master/docs/01-environment-setup0.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
@@ -283,20 +320,110 @@
                   
                 
                 
-                  <h1>License</h1>
-                
-                <p>Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.</p>
-<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this
-software and associated documentation files (the "Software"), to deal in the Software
-without restriction, including without limitation the rights to use, copy, modify,
-merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so.</p>
-<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
-PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+                <h1 id="module-1-setup-instructions">Module 1: Setup Instructions</h1>
+<p>In the first module you will set up a VPC with a Cloud9 IDE for your use.  You'll be running one CloudFormation template which will automate the creation of the environment and then you will manually configure the rest. AWS Cloud9 is a cloud-based integrated development environment (IDE) that lets you write, run, and debug your code with just a browser. It includes a code editor, debugger, and terminal. Cloud9 comes pre-packaged with essential tools for popular programming languages and the AWS Command Line Interface (CLI) pre-installed so you don’t need to install files or configure your laptop for this workshop.</p>
+<p>To setup your environment please expand one of the following drop-downs (depending on how if you are doing this workshop at an <strong>AWS event</strong> or <strong>individually</strong>) and follow the instructions:</p>
+<details class="info"><summary>Click here if you are <em>using your own AWS account</em>. You will be using your computer to run the commands.</summary><p>Log in to your account however you would normally. You should use an IAM user or role with admin rights.</p>
+<p><strong>CloudFormation:</strong> Launch the CloudFormation stack below to setup the environment:</p>
+<table>
+<thead>
+<tr>
+<th>Region</th>
+<th>Deploy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>US East 1 (Virginia)</td>
+<td><a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Infrastructure-Identity&templateURL=https://sa-security-specialist-workshops-us-west-2.s3-us-west-2.amazonaws.com/identity-workshop/idm-infrastructure/01-environment-setup.yaml" target="_blank"><img alt="Deploy in us-east-2" src="../images/deploy-to-aws.png" /></a></td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Click the <strong>Deploy to AWS</strong> button above.  This will automatically take you to the console to run the template.  </li>
+<li>Click <strong>Next</strong> under the <strong>Create stack</strong> section.</li>
+<li>Click <strong>Next</strong> under the <strong>Specify stack details</strong> section (the stack name will already be filled - you can leave the other options in Parameters at their default settings too)</li>
+<li>Click <strong>Next</strong> under the <strong>Advanced options</strong> section.</li>
+<li>Finally, acknowledge that the template will create IAM resources with custom names under <strong>Capabilities</strong> and click <strong>Create stack</strong>.</li>
+</ol>
+<p>This will bring you back to the CloudFormation console. You can refresh the stack set to see the latest status. Before moving on, make sure the stack finally shows <strong>CREATE_COMPLETE</strong>.</p>
+<p>You will need to configure the <a href="https://aws.amazon.com/cli/" target="_blank"> AWS CLI </a> on your computer with an access key from a principal (IAM user, role, etc) that has at least IAM Full Access and sts:AssumeRole (in order to complete the cleanup at the end, you will also need Lambda Full Access and CloudFormation Full Access.) Then move on to <strong>Task 1</strong>.</p>
+</details>
+<details class="info"><summary>Click here if you're at an <em>AWS event</em> where the <em>Event Engine</em> is being used. You will be using Cloud9 to run the commands.</summary><p><p style="font-size:20px;">
+  <strong>Step 1</strong> : Retrieve temporary credentials from Event Engine
+</p></p>
+<ol>
+<li>Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a></li>
+<li>Enter your <strong>team hash</strong> code.</li>
+<li>Click <strong>AWS Console</strong></li>
+<li>Copy the <strong>export</strong> commands under the <strong>Credentials</strong> section for the temporary credentials (you will need these in the next step.)</li>
+</ol>
+<p><p style="font-size:20px;">
+  <strong>Step 2</strong> : Connect to the AWS Console via Event Engine and browse to the AWS Cloud9 IDE
+</p></p>
+<ol>
+<li>Click <strong>Open Console</strong> from the Event Engine window</li>
+<li>Navigate to the <a href="https://us-east-1.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console.</li>
+<li>Click on <strong>Open IDE</strong> in the <code>workshop-environment</code> under <strong>Your environments</strong></li>
+<li>Click the <strong>gear image</strong> icon in the upper right hand corner to open the Cloud9 Preferences. Scroll down in the settings, click on the <strong>AWS SETTINGS</strong> section and click the button next to <strong>AWS managed temporary credentials</strong> to disable this.</li>
+<li>Now go to a Cloud9 terminal tab (tab title will start with the words <strong>bash</strong>).</li>
+<li>Type <code>aws configure --profile default</code> hit enter. Hit enter until you get to the choice <strong>Default region name</strong> and type in <code>us-east-1</code>. Hit enter and then enter again to leave this menu.</li>
+<li>Then create a file in the <code>~/.aws</code> directory named <code>credentials</code> and paste in the credentials you copied from the Event Engine. You will need to remove the word <strong>export</strong> from the start of each line. Add <code>[default]</code> before all these rows. You should end up with something that looks like this:<br>
+[default]</br>
+AWS_ACCESS_KEY_ID=ASIA<strong><em>_</em></strong>_</br>
+AWS_SECRET_ACCESS_KEY=iZoD<strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong>__</br>
+AWS_SESSION_TOKEN=FQoG<strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong>___</br></li>
+<li>Now you can run commands from within the Cloud9 IDE using the temporary credentials from Event Engine. If you open a new tab you will need to paste in the credentials again.</li>
+<li>Move on to <strong>Task 1</strong>.</li>
+</ol>
+</details>
+<!---
+??? info  "Click here if you're at an *AWS event* and *AWS provided an account to you*. You will be using Cloud9 to run the commands."
+
+    <p style="font-size:20px;">
+      **Step 1**: Login to the console and run the CloudFormation template
+    </p>
+
+    **Console Login:** Your team should have been given a piece of paper with a URL and credentials. This will allow you to login using AWS SSO.
+
+    After you login click **AWS Account** box, then click on the Account ID displayed below that (the red box in the image.) You should see a link below that for **Management console**. Click on that and you will be taken the AWS console. Make sure the region is set to US East 2 (Ohio).
+
+    ** Click the *Deploy to AWS* button below to launch the CloudFormation stack. **
+
+    Region| Deploy
+    ------|-----
+    US East 1 (Virginia) | <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Perm-Bound-Adv&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/permissionboundary/identity-workshop-web-admins-advanced.yaml" target="_blank">![Deploy in us-east-2](./images/deploy-to-aws.png)</a>
+
+    1. Click **Next** on the **Select Template** section.
+    2. Click **Next** on the **Specify Details** section (the stack name will be already filled - you can change it or leave it as is)
+    3. Click **Next** on the **Options** section.
+    4. Finally, acknowledge that the template will create IAM roles under **Capabilities** and click **Create**.
+    5. This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack shows **CREATE_COMPLETE**.
+
+     <p style="font-size:20px;">
+      **Step 2** : Create an IAM user so you can grab the
+    </p>
+
+    <p style="font-size:20px;">
+      **Step 2** : Connect to the AWS Cloud9 IDE
+    </p>
+
+    1. Navigate to the <a href="https://us-east-2.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console.
+    2. Click on **Open IDE** in the `workshop-environment` under **Your environments**
+    3. Click the **gear** icon in the upper right hand corner to open the Cloud9 Preferences. Scroll down in the settings, click on the **AWS SETTINGS** section and click the button next to **AWS Managed Temporary Credentials** to disable this.
+    4. --- Need steps here ---
+    4. Go back to the Cloud9 environment. Type `aws configure` hit enter. Hit enter until you get to the choice **Default region name** and type in `us-east-2`. Hit enter and then enter again to leave this menu.
+    5. Then create a file in the `~/.aws` directory named `credentials` and paste in the credentials you copied from the SSO login page. Rename the profile to `default` (it will be named something similar to **Account_ID_AdministratorAccess** when you first paste it in)
+    4. Now you can run commands from within the Cloud9 IDE using the temporary credentials from AWS SSO.
+    4. Move on to **Task 1**.
+--->
+
+<hr />
+<h3 id="_1"></h3>
+<h2 id="architecture-overview">Architecture Overview</h2>
+<p>Your environment is now configured and ready for next steps.  Below is a diagram to depict the initial environment.</p>
+<p><img alt="VPC" src="../images/01-IdentityInfrastructure-Env-Setup.png" /></p>
+<p>After you have successfully setup your environment, you can proceed to the next module.</p>
                 
               
               
@@ -311,27 +438,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
       
         
 <footer class="md-footer">
-  
-    <div class="md-footer-nav">
-      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
-        
-          <a href="../contribute/" title="Contributing" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
-            <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-            </div>
-            <div class="md-footer-nav__title">
-              <div class="md-ellipsis">
-                <span class="md-footer-nav__direction">
-                  Previous
-                </span>
-                Contributing
-              </div>
-            </div>
-          </a>
-        
-        
-      </nav>
-    </div>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
